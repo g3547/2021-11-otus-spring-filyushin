@@ -19,10 +19,12 @@ public class QuestionDaoFromCsv implements QuestionDao {
         this.reedCsv();
     }
 
-    public int getQuestionListSize(){
+    @Override
+    public int getQuestionListSize() {
         return this.questionList.size();
     }
 
+    @Override
     public Question getQuestionByNumber(int questionNumber) {
 
         for (Question question : questionList) {
