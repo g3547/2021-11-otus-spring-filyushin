@@ -23,7 +23,7 @@ public class Main {
         for (int i = 1; i < daoService.getQuestionListSize() + 1; i++) {
             testingService.askQuestion(daoService.getQuestionByNumber(i));
         }
-        testingService.getResult();
+        System.out.println(testingService.getResult());
 
     }
 }

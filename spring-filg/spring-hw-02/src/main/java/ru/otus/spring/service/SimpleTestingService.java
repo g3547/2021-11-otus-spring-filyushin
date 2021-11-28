@@ -37,11 +37,11 @@ public class SimpleTestingService implements TestingService {
     }
 
     @Override
-    public void getResult() {
+    public String getResult() {
         if (this.actualScore >= this.scoreToPass)
-            System.out.println(String.format("Congratulations! You scored %s / $s", actualScore, scoreToPass));
+            return String.format("Congratulations! You scored %s / %s", actualScore, scoreToPass);
         else
-            System.out.println(String.format("You failed! Need to score %s, but you got %s", scoreToPass, actualScore));
+            return String.format("You failed! You scored %s / %s", actualScore, scoreToPass);
     }
 
     private String transformText(boolean isCorrect) {
