@@ -13,38 +13,57 @@ import java.util.List;
 public class QuestionDaoFromCsv implements QuestionDao {
     private final String sourceFile;
     private List<Question> questionList;
+    private List<String> stringDataList;
 
     public QuestionDaoFromCsv(String filePath) {
         this.sourceFile = filePath;
-        this.reedCsv();
     }
 
     @Override
     public int getQuestionListSize() {
+        initDataFromFile();
         return this.questionList.size();
     }
 
     @Override
     public Question getQuestionByNumber(int questionNumber) {
-
+        initDataFromFile();
         for (Question question : questionList) {
             if (question.getQuestionNumber() == questionNumber) return question;
         }
         throw new RuntimeException("Didn't find question");
     }
 
-    private void reedCsv() {
-        questionList = new ArrayList<>();
-        String line;
+    private List<String> reedCsvFile() {
+        stringDataList = new ArrayList<>();
         try (BufferedReader reader = initReader()) {
-            line = reader.readLine();
+            String line = reader.readLine();
             while (line != null) {
-                String[] questions = line.split(",");
-                questionList.add(new Question(questions[0], questions[1], questions[2]));
+                stringDataList.add(line);
                 line = reader.readLine();
             }
         } catch (IOException e) {
             throw new RuntimeException("file path error", e);
+        }
+        return stringDataList;
+    }
+
+    private List<Question> fillInQuestions() {
+        questionList = new ArrayList<>();
+
+        for (String line : stringDataList) {
+            String[] questions = line.split(",");
+            questionList.add(new Question(questions[0], questions[1], questions[2]));
+        }
+        return questionList;
+    }
+
+    private void initDataFromFile() {
+        if (stringDataList == null) {
+            stringDataList = reedCsvFile();
+        }
+        if (questionList == null) {
+            questionList = fillInQuestions();
         }
     }
 

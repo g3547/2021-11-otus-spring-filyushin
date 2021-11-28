@@ -11,9 +11,7 @@ public class Main {
 
         QuestionServiceImpl daoService = context.getBean(QuestionServiceImpl.class);
 
-        for (int i = 1; i < daoService.getQuestionListSize()+1; i++) {
-            System.out.println(daoService.getQuestionByNumber(i));
-        }
+        daoService.readAllQuestions();
 
     }
 }
