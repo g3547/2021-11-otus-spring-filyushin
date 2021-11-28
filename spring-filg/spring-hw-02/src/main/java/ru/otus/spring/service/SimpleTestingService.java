@@ -2,6 +2,7 @@ package ru.otus.spring.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Question;
 
 import java.util.Scanner;
@@ -11,13 +12,15 @@ public class SimpleTestingService implements TestingService {
 
     private String studentName;
     private int actualScore;
-
-    public SimpleTestingService(@Value("${testing.score}") int scoreToPass) {
-        this.scoreToPass = scoreToPass;
-    }
+    private final QuestionService questionService;
 
     private final int scoreToPass;
     private Scanner scanner = new Scanner(System.in);
+
+    public SimpleTestingService(@Value("${testing.score}") int scoreToPass,QuestionService questionService ) {
+        this.scoreToPass = scoreToPass;
+        this.questionService=questionService;
+    }
 
     @Override
     public void helloTesting() {
@@ -42,6 +45,18 @@ public class SimpleTestingService implements TestingService {
             return String.format("Congratulations! You scored %s / %s", actualScore, scoreToPass);
         else
             return String.format("You failed! You scored %s / %s", actualScore, scoreToPass);
+    }
+
+    @Override
+    public void testStudent() {
+        helloTesting();
+
+        for (int i = 1; i < questionService.getQuestionListSize() + 1; i++) {
+            askQuestion(questionService.getQuestionByNumber(i));
+        }
+
+        System.out.println(getResult());
+
     }
 
     private String transformText(boolean isCorrect) {

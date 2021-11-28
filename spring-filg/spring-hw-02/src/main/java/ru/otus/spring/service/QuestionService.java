@@ -3,8 +3,9 @@ package ru.otus.spring.service;
 import ru.otus.spring.domain.Question;
 
 public interface QuestionService {
-
     public int getQuestionListSize();
 
     public Question getQuestionByNumber(int questionNumber) ;
+
+    public void readAllQuestions();
 }

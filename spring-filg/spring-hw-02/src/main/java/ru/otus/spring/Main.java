@@ -15,15 +15,9 @@ public class Main {
     public static void main(String[] args) {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
-        QuestionServiceImpl daoService = context.getBean(QuestionServiceImpl.class);
         SimpleTestingService testingService = context.getBean(SimpleTestingService.class);
 
-        testingService.helloTesting();
-
-        for (int i = 1; i < daoService.getQuestionListSize() + 1; i++) {
-            testingService.askQuestion(daoService.getQuestionByNumber(i));
-        }
-        System.out.println(testingService.getResult());
+        testingService.testStudent();
 
     }
 }
