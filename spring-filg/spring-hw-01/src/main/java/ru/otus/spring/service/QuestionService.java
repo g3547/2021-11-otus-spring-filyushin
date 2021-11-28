@@ -7,4 +7,6 @@ public interface QuestionService {
     public int getQuestionListSize();
 
     public Question getQuestionByNumber(int questionNumber) ;
+
+    public void readAllQuestions();
 }
