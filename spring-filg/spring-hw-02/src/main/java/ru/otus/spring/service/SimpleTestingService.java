@@ -2,7 +2,6 @@ package ru.otus.spring.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Question;
 
 import java.util.Scanner;
@@ -17,9 +16,9 @@ public class SimpleTestingService implements TestingService {
     private final int scoreToPass;
     private Scanner scanner = new Scanner(System.in);
 
-    public SimpleTestingService(@Value("${testing.score}") int scoreToPass,QuestionService questionService ) {
+    public SimpleTestingService(@Value("${testing.score}") int scoreToPass, QuestionService questionService) {
         this.scoreToPass = scoreToPass;
-        this.questionService=questionService;
+        this.questionService = questionService;
     }
 
     @Override
