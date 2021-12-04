@@ -1,29 +1,20 @@
-package ru.otus.spting.dao;
+package dao;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.otus.spring.Main;
 import ru.otus.spring.dao.QuestionDaoFromCsv;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.service.QuestionServiceImpl;
 
+@SpringBootTest
 public class CsvReadingTest {
 
     private static AnnotationConfigApplicationContext context;
     private static QuestionDaoFromCsv daoFromCsv;
     private static QuestionServiceImpl daoService;
 
-
-    @BeforeAll
-    public static void setUp() {
-        context = new AnnotationConfigApplicationContext(Main.class);
-
-        daoFromCsv = context.getBean(QuestionDaoFromCsv.class);
-        daoService = context.getBean(QuestionServiceImpl.class);
-
-    }
 
     @Test
     public void csvReaderShouldCreateQuestion() {

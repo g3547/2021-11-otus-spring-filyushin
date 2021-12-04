@@ -1,0 +1,8 @@
+spring:
+  messages:
+  basename: messages
+testing:
+  score: 6
+LocaleManager:
+  language: ru
+  country: RU

@@ -3,9 +3,11 @@ package ru.otus.spting.dao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.otus.spring.Main;
 import ru.otus.spring.domain.Question;
+import ru.otus.spring.service.AnswerReader;
 import ru.otus.spring.service.SimpleTestingService;
 
 public class SimpleTestingServiceTest {
@@ -13,7 +15,8 @@ public class SimpleTestingServiceTest {
     private static AnnotationConfigApplicationContext context;
 
     private static SimpleTestingService testingService;
-
+    @Mock
+    private AnswerReader answerReader;
 
     @BeforeAll
     public static void setUp() {
@@ -29,7 +32,7 @@ public class SimpleTestingServiceTest {
 
         testingService.askQuestion(q1);
 
-        Assertions.assertEquals("",testingService.getResult());
+        Assertions.assertEquals("", testingService.getResult());
     }
 
 }

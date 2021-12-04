@@ -1,10 +1,13 @@
 package ru.otus.spring.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import ru.otus.spring.domain.Question;
 
-import java.util.Scanner;
+import javax.annotation.PostConstruct;
+import java.util.Locale;
 
 @Component
 public class SimpleTestingService implements TestingService {
@@ -12,26 +15,32 @@ public class SimpleTestingService implements TestingService {
     private String studentName;
     private int actualScore;
     private final QuestionService questionService;
+    private final AnswerReader answerReader;
 
     private final int scoreToPass;
-    private Scanner scanner = new Scanner(System.in);
 
-    public SimpleTestingService(@Value("${testing.score}") int scoreToPass, QuestionService questionService) {
+    @Autowired
+    private MessageSource messageSource;
+
+    public SimpleTestingService(@Value("${testing.score}") int scoreToPass,
+                                QuestionService questionService,
+                                AnswerReader answerReader) {
         this.scoreToPass = scoreToPass;
         this.questionService = questionService;
+        this.answerReader = answerReader;
     }
 
     @Override
     public void helloTesting() {
         System.out.println("print your name");
-        studentName = scanner.next();
+        studentName = answerReader.reedLine();
         System.out.println(String.format("Hi, %s, lets start testing", studentName));
     }
 
     @Override
     public void askQuestion(Question question) {
         System.out.println(question.getQuestion());
-        String answer = scanner.next();
+        String answer = answerReader.reedLine();
         boolean isCorrect = validateAnswer(question, answer);
         System.out.println(String.format("Your answer is %s", transformText(isCorrect)));
         System.out.println("---");
@@ -47,6 +56,7 @@ public class SimpleTestingService implements TestingService {
     }
 
     @Override
+    @PostConstruct
     public void testStudent() {
         helloTesting();
 
