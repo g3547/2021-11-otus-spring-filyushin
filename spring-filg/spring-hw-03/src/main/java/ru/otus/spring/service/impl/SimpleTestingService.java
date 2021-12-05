@@ -1,13 +1,12 @@
-package ru.otus.spring.service;
+package ru.otus.spring.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import ru.otus.spring.domain.Question;
-
-import javax.annotation.PostConstruct;
-import java.util.Locale;
+import ru.otus.spring.service.AnswerReader;
+import ru.otus.spring.service.LocalizationService;
+import ru.otus.spring.service.QuestionService;
+import ru.otus.spring.service.TestingService;
 
 @Component
 public class SimpleTestingService implements TestingService {
@@ -16,25 +15,30 @@ public class SimpleTestingService implements TestingService {
     private int actualScore;
     private final QuestionService questionService;
     private final AnswerReader answerReader;
+    private final LocalizationService localService;
+
 
     private final int scoreToPass;
 
-    @Autowired
-    private MessageSource messageSource;
 
     public SimpleTestingService(@Value("${testing.score}") int scoreToPass,
                                 QuestionService questionService,
-                                AnswerReader answerReader) {
+                                AnswerReader answerReader, LocalizationService localService) {
         this.scoreToPass = scoreToPass;
         this.questionService = questionService;
         this.answerReader = answerReader;
+        this.localService = localService;
     }
 
     @Override
     public void helloTesting() {
-        System.out.println("print your name");
+        String name = localService.getLocalString("fill-in.name");
+        System.out.println(name);
+
         studentName = answerReader.reedLine();
-        System.out.println(String.format("Hi, %s, lets start testing", studentName));
+
+        String hello = localService.getLocalString("strings.hello");
+        System.out.println(hello);
     }
 
     @Override
@@ -50,13 +54,13 @@ public class SimpleTestingService implements TestingService {
     @Override
     public String getResult() {
         if (this.actualScore >= this.scoreToPass)
-            return String.format("Congratulations! You scored %s / %s", actualScore, scoreToPass);
+            return localService.getLocalString("strings.congratulations");
         else
-            return String.format("You failed! You scored %s / %s", actualScore, scoreToPass);
+            return localService.getLocalString("strings.failed");
     }
 
     @Override
-    @PostConstruct
+//    @PostConstruct
     public void testStudent() {
         helloTesting();
 
@@ -69,8 +73,8 @@ public class SimpleTestingService implements TestingService {
     }
 
     private String transformText(boolean isCorrect) {
-        if (isCorrect) return "Correct";
-        else return "Not Correct";
+        if (isCorrect) return localService.getLocalString("strings.correct");
+        else return localService.getLocalString("strings.not-correct");
     }
 
     private boolean validateAnswer(Question question, String answer) {

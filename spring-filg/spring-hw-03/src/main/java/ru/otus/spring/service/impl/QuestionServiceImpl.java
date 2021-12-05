@@ -1,8 +1,9 @@
-package ru.otus.spring.service;
+package ru.otus.spring.service.impl;
 
 import org.springframework.stereotype.Component;
 import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Question;
+import ru.otus.spring.service.QuestionService;
 
 @Component
 public class QuestionServiceImpl implements QuestionService {

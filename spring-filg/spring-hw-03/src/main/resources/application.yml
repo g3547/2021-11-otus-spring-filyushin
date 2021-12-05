@@ -1,8 +1,10 @@
 spring:
   messages:
-  basename: messages
+    basename: messages
+
 testing:
   score: 6
-LocaleManager:
-  language: ru
-  country: RU
+
+messages:
+  language: en-EN
+#  language: ru-Ru
