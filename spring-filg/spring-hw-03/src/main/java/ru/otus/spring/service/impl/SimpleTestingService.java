@@ -8,6 +8,8 @@ import ru.otus.spring.service.LocalizationService;
 import ru.otus.spring.service.QuestionService;
 import ru.otus.spring.service.TestingService;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class SimpleTestingService implements TestingService {
 
@@ -37,16 +39,17 @@ public class SimpleTestingService implements TestingService {
 
         studentName = answerReader.reedLine();
 
-        String hello = localService.getLocalString("strings.hello");
+        String hello = localService.getLocalString("strings.hello",studentName);
         System.out.println(hello);
     }
 
     @Override
     public void askQuestion(Question question) {
+        System.out.println(localService.getLocalString("strings.ask"));
         System.out.println(question.getQuestion());
         String answer = answerReader.reedLine();
         boolean isCorrect = validateAnswer(question, answer);
-        System.out.println(String.format("Your answer is %s", transformText(isCorrect)));
+        System.out.println(localService.getLocalString("strings.answer", transformText(isCorrect)));
         System.out.println("---");
 
     }
@@ -54,13 +57,17 @@ public class SimpleTestingService implements TestingService {
     @Override
     public String getResult() {
         if (this.actualScore >= this.scoreToPass)
-            return localService.getLocalString("strings.congratulations");
+            return localService.getLocalString("strings.congratulations",
+                    String.valueOf(actualScore),
+                    String.valueOf(scoreToPass));
         else
-            return localService.getLocalString("strings.failed");
+            return localService.getLocalString("strings.failed",
+                    String.valueOf(actualScore),
+                    String.valueOf(scoreToPass));
     }
 
     @Override
-//    @PostConstruct
+    @PostConstruct
     public void testStudent() {
         helloTesting();
 

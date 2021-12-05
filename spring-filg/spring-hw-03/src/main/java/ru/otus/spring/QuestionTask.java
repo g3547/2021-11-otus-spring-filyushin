@@ -6,9 +6,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import ru.otus.spring.service.LocalizationService;
-
-import java.util.Locale;
 
 @SpringBootApplication
 public class QuestionTask {
@@ -16,15 +13,15 @@ public class QuestionTask {
     public static void main(String[] args) {
 
         ConfigurableApplicationContext run = SpringApplication.run(QuestionTask.class, args);
-        LocalizationService localizationService = run.getBean(LocalizationService.class);
-        MessageSource msg = run.getBean(MessageSource.class);
-        String message = msg.getMessage("strings.hello",
-                new String[]{"ddk"}, Locale.forLanguageTag("ru-Ru"));
-        System.out.println(message);
-        System.out.println(localizationService.getLocalString("strings.hello","ddd"));
-
-        String localString = localizationService.getLocalString("fill-in.name");
-        System.out.println(localString);
+//        LocalizationService localizationService = run.getBean(LocalizationService.class);
+//        MessageSource msg = run.getBean(MessageSource.class);
+//        String message = msg.getMessage("strings.hello",
+//                new String[]{"ddk"}, Locale.forLanguageTag("ru-Ru"));
+//        System.out.println(message);
+//        System.out.println(localizationService.getLocalString("strings.hello","ddd"));
+//
+//        String localString = localizationService.getLocalString("fill-in.name");
+//        System.out.println(localString);
 
     }
 
