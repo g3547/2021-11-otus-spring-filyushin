@@ -47,6 +47,8 @@ public class SimpleTestingService implements TestingService {
     public void askQuestion(Question question) {
         System.out.println(localService.getLocalString("strings.ask"));
         System.out.println(question.getQuestion());
+        System.out.println(localService.getLocalString("fill-in.answer"));
+
         String answer = answerReader.reedLine();
         boolean isCorrect = validateAnswer(question, answer);
         System.out.println(localService.getLocalString("strings.answer", transformText(isCorrect)));

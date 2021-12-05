@@ -10,12 +10,10 @@ import java.util.Locale;
 @Service
 public class SimpleLocalizationService implements LocalizationService {
 
-    private final String appLang;
     private final MessageSource messageSource;
     private final Locale locale;
 
     public SimpleLocalizationService(@Value("${messages.language}") String appLang, MessageSource messageSource) {
-        this.appLang = appLang;
         this.messageSource = messageSource;
         this.locale = Locale.forLanguageTag(appLang);
     }
