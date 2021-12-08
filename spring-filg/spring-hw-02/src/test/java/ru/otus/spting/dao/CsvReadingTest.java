@@ -34,7 +34,7 @@ public class CsvReadingTest {
 
     @Test
     public void daoServiceShouldReturnSize() {
-        Assertions.assertEquals(4, daoService.getQuestionListSize());
+        Assertions.assertEquals(5, daoService.getQuestionListSize());
     }
 
 }
