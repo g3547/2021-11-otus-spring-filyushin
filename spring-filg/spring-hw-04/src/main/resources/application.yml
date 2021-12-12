@@ -1,7 +1,8 @@
 spring:
   messages:
     basename: messages
-
+  main:
+    allow-circular-references: true
 testing:
   score: 6
 

@@ -4,8 +4,7 @@ import ru.otus.spring.domain.Question;
 
 public interface TestingService {
     public String getResult();
-    public void helloTesting();
     public void askQuestion(Question question);
-    public void testStudent();
+    public boolean testStudent();
 
 }

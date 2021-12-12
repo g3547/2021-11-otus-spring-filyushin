@@ -8,12 +8,9 @@ import ru.otus.spring.service.LocalizationService;
 import ru.otus.spring.service.QuestionService;
 import ru.otus.spring.service.TestingService;
 
-import javax.annotation.PostConstruct;
-
 @Component
 public class SimpleTestingService implements TestingService {
 
-    private String studentName;
     private int actualScore;
     private final QuestionService questionService;
     private final AnswerReader answerReader;
@@ -32,16 +29,6 @@ public class SimpleTestingService implements TestingService {
         this.localService = localService;
     }
 
-    @Override
-    public void helloTesting() {
-        String name = localService.getLocalString("fill-in.name");
-        System.out.println(name);
-
-        studentName = answerReader.reedLine();
-
-        String hello = localService.getLocalString("strings.hello",studentName);
-        System.out.println(hello);
-    }
 
     @Override
     public void askQuestion(Question question) {
@@ -69,16 +56,12 @@ public class SimpleTestingService implements TestingService {
     }
 
     @Override
-    @PostConstruct
-    public void testStudent() {
-        helloTesting();
-
+    public boolean testStudent() {
         for (int i = 1; i < questionService.getQuestionListSize() + 1; i++) {
             askQuestion(questionService.getQuestionByNumber(i));
         }
-
-        System.out.println(getResult());
-
+        System.out.println(localService.getLocalString("strings.testing_finished"));
+        return true;
     }
 
     private String transformText(boolean isCorrect) {
