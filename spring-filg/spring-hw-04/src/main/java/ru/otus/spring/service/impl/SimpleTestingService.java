@@ -38,13 +38,18 @@ public class SimpleTestingService implements TestingService {
     }
 
     @Override
+    public int getActualScore() {
+        return this.actualScore;
+    }
+
+    @Override
     public String getResult() {
-        if (this.actualScore >= this.scoreToPass)
-            return localService.getLocalString("strings.congratulations",
+        if (getActualScore() >= this.scoreToPass)
+            return String.format("Поздравляю! ты набрал %s / %s",
                     String.valueOf(actualScore),
                     String.valueOf(scoreToPass));
         else
-            return localService.getLocalString("strings.failed",
+            return String.format("Провал! ты набрал %s / %s",
                     String.valueOf(actualScore),
                     String.valueOf(scoreToPass));
     }
@@ -57,7 +62,7 @@ public class SimpleTestingService implements TestingService {
             System.out.println(localService.getLocalString("fill-in.answer"));
 
             String answer = answerReader.reedLine();
-            validateAnswer(question,answer);
+            validateAnswer(question, answer);
         }
         System.out.println(localService.getLocalString("strings.testing_finished"));
         return true;
@@ -80,7 +85,6 @@ public class SimpleTestingService implements TestingService {
     private void countScore(boolean isAnswerCorrect) {
         if (isAnswerCorrect) {
             this.actualScore += 2;
-        }
-        else this.actualScore -= 1;
+        } else this.actualScore -= 1;
     }
 }
