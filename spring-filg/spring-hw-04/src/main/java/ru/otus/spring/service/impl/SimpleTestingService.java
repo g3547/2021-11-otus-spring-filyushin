@@ -34,12 +34,6 @@ public class SimpleTestingService implements TestingService {
     public void askQuestion(Question question) {
         System.out.println(localService.getLocalString("strings.ask"));
         System.out.println(question.getQuestion());
-        System.out.println(localService.getLocalString("fill-in.answer"));
-
-        String answer = answerReader.reedLine();
-        boolean isCorrect = validateAnswer(question, answer);
-        System.out.println(localService.getLocalString("strings.answer", transformText(isCorrect)));
-        System.out.println("---");
 
     }
 
@@ -58,7 +52,12 @@ public class SimpleTestingService implements TestingService {
     @Override
     public boolean testStudent() {
         for (int i = 1; i < questionService.getQuestionListSize() + 1; i++) {
-            askQuestion(questionService.getQuestionByNumber(i));
+            Question question = questionService.getQuestionByNumber(i);
+            askQuestion(question);
+            System.out.println(localService.getLocalString("fill-in.answer"));
+
+            String answer = answerReader.reedLine();
+            validateAnswer(question,answer);
         }
         System.out.println(localService.getLocalString("strings.testing_finished"));
         return true;
@@ -69,11 +68,19 @@ public class SimpleTestingService implements TestingService {
         else return localService.getLocalString("strings.not-correct");
     }
 
-    private boolean validateAnswer(Question question, String answer) {
-        if (question.getRightAnswer().equals(answer)) {
+    @Override
+    public boolean validateAnswer(Question question, String answer) {
+        boolean isCorrect = question.getRightAnswer().equals(answer);
+        countScore(isCorrect);
+        System.out.println(localService.getLocalString("strings.answer", transformText(isCorrect)));
+        System.out.println("---");
+        return isCorrect;
+    }
+
+    private void countScore(boolean isAnswerCorrect) {
+        if (isAnswerCorrect) {
             this.actualScore += 2;
-            return true;
-        } else this.actualScore -= 1;
-        return false;
+        }
+        else this.actualScore -= 1;
     }
 }
