@@ -1,0 +1,11 @@
+spring:
+  messages:
+    basename: messages
+  main:
+    allow-circular-references: true
+testing:
+  score: 6
+
+messages:
+  language: en-EN
+#  language: ru-Ru
