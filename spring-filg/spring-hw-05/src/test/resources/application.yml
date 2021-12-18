@@ -1,0 +1,12 @@
+spring:
+  shell:
+    interactive:
+      enabled: false
+  main:
+    allow-circular-references: true
+
+messages:
+  language: en-EN
+
+testing:
+  score: 6
