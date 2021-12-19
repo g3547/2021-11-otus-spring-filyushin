@@ -14,7 +14,6 @@ public class GenreAuthorService implements GenreService {
 
     private final GenreDao dao;
 
-
     @Override
     public List<Genre> getGenres() {
         return dao.getGenres();

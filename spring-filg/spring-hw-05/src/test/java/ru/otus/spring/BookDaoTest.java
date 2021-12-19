@@ -21,8 +21,8 @@ public class BookDaoTest {
 
     @Autowired
     private BookDaoJdbc bookDao;
-    private int EXPECTED_BOOK_COUNT = 2;
-    private long EXISTING_BOOK_ID = 1;
+    private final int EXPECTED_BOOK_COUNT = 2;
+    private final long EXISTING_BOOK_ID = 1;
 
     @DisplayName("возвращать ожидаемое количество книг в БД")
     @Test
@@ -71,6 +71,7 @@ public class BookDaoTest {
 
         assertThat(bookAfter).isEqualTo(newBook);
     }
+
     @DisplayName("возвращать книги из БД")
     @Test
     void shouldReturnBook() {
