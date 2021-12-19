@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LibTask {
+public class LibraryTask {
 
     public static void main(String[] args) {
-        SpringApplication.run(LibTask.class, args);
+        SpringApplication.run(LibraryTask.class, args);
     }
 
 }

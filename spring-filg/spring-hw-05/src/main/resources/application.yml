@@ -1,11 +1,18 @@
 spring:
-  messages:
-    basename: messages
   main:
     allow-circular-references: true
-testing:
-  score: 6
-
-messages:
-  language: en-EN
-#  language: ru-Ru
+  datasource:
+    url: jdbc:h2:mem:testdb
+    #initialization-mode: always
+    #schema: schema.sql
+    #data: data.sql
+  sql:
+    init:
+      mode: always
+      data-locations: data.sql
+      schema-locations: schema.sql
+  h2:
+    console:
+      path: /h2-console
+      settings:
+        web-allow-others: true
