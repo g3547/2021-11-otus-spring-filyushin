@@ -23,10 +23,10 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public Book getBookById(long id) {
         return jdbc
-                .queryForObject("SELECT BOOK_ID,TITLE,AUTHOR_ID,GENRE_ID,g.NAME,a.FULL_NAME " +
+                .queryForObject("SELECT BOOK_ID,TITLE,b.AUTHOR_ID,b.GENRE_ID,g.NAME,a.FULL_NAME " +
                                 "FROM BOOK b " +
-                                "JOIN AUTHOR a ON b.author_id=a.author_id" +
-                                "JOIN GENRE g ON b.genre_id=g.genre_id" +
+                                "JOIN AUTHOR a ON b.author_id=a.author_id " +
+                                "JOIN GENRE g ON b.genre_id=g.genre_id " +
                                 "WHERE b.BOOK_ID=:id", Map.of("id", id),
                         new BookMapper());
     }
@@ -34,10 +34,10 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public List<Book> getBooksByAuthor(Author author) {
         return jdbc
-                .query("SELECT BOOK_ID,TITLE,AUTHOR_ID,GENRE_ID,g.NAME,a.FULL_NAME " +
+                .query("SELECT BOOK_ID,TITLE,b.AUTHOR_ID,b.GENRE_ID,g.NAME,a.FULL_NAME " +
                                 "FROM BOOK b " +
-                                "JOIN AUTHOR a ON b.author_id=a.author_id" +
-                                "JOIN GENRE g ON b.genre_id=g.genre_id" +
+                                "JOIN AUTHOR a ON b.author_id=a.author_id " +
+                                "JOIN GENRE g ON b.genre_id=g.genre_id " +
                                 "WHERE a.author_id=:author_id", Map.of("author_id", author.getId()),
                         new BookMapper());
     }
@@ -45,10 +45,10 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public List<Book> getBooksByGenre(Genre genre) {
         return jdbc
-                .query("SELECT BOOK_ID,TITLE,AUTHOR_ID,GENRE_ID,g.NAME,a.FULL_NAME " +
+                .query("SELECT BOOK_ID,TITLE,b.AUTHOR_ID,b.GENRE_ID,g.NAME,a.FULL_NAME " +
                                 "FROM BOOK b " +
-                                "JOIN AUTHOR a ON b.author_id=a.author_id" +
-                                "JOIN GENRE g ON b.genre_id=g.genre_id" +
+                                "JOIN AUTHOR a ON b.author_id=a.author_id " +
+                                "JOIN GENRE g ON b.genre_id=g.genre_id " +
                                 "WHERE g.genre_id=:genre_id", Map.of("genre_id", genre.getId()),
                         new BookMapper());
     }
@@ -56,9 +56,9 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public List<Book> getBooks() {
         return jdbc.getJdbcOperations()
-                .query("SELECT BOOK_ID,TITLE,AUTHOR_ID,GENRE_ID,g.NAME,a.FULL_NAME " +
+                .query("SELECT BOOK_ID,TITLE,b.AUTHOR_ID,b.GENRE_ID,g.NAME,a.FULL_NAME " +
                                 "FROM BOOK b " +
-                                "JOIN AUTHOR a ON b.author_id=a.author_id" +
+                                "JOIN AUTHOR a ON b.author_id=a.author_id " +
                                 "JOIN GENRE g ON b.genre_id=g.genre_id",
                         new BookMapper());
 
@@ -69,10 +69,15 @@ public class BookDaoJdbc implements BookDao {
         Map<String, Object> params = Map.of("book_id", newBook.getId(),
                 "title", newBook.getTitle(),
                 "author_id", newBook.getAuthor().getId(),
-                "genre_id", newBook.getId());
-        jdbc.getJdbcOperations().
-                update("INSERT into BOOK(BOOK_ID,TITLE,AUTHOR_ID,GENRE_ID) " +
-                        "values (:book_id,:title,:author_id,:genre_id)", params);
+                "genre_id", newBook.getGenre().getId());
+
+        jdbc.update("INSERT into BOOK(BOOK_ID,TITLE,AUTHOR_ID,GENRE_ID) " +
+                "values (:book_id,:title,:author_id,:genre_id)", params);
+    }
+
+    @Override
+    public int countBooks() {
+        return jdbc.getJdbcOperations().queryForObject("SELECT count(*) FROM BOOK", Integer.class);
     }
 
     @Override
@@ -80,12 +85,12 @@ public class BookDaoJdbc implements BookDao {
         Map<String, Object> params = Map.of("book_id", book.getId(),
                 "title", book.getTitle(),
                 "author_id", book.getAuthor().getId(),
-                "genre_id", book.getId());
+                "genre_id", book.getGenre().getId());
 
-        jdbc.update("UPDATE BOOK" +
-                                "SET (TITLE,AUTHOR_ID,GENRE_ID) = (:title,:author_id,:genre_id) " +
-                                "WHERE BOOK_ID=:book_id",
-                        params);
+        jdbc.update("UPDATE BOOK " +
+                        "SET (TITLE,AUTHOR_ID,GENRE_ID) = (:title,:author_id,:genre_id) " +
+                        "WHERE BOOK_ID=:book_id",
+                params);
     }
 
     @Override

@@ -16,6 +16,7 @@ public interface BookDao {
     List<Book> getBooks();
 
     void addBook(Book newBook);
+    int countBooks();
 
     void updateBook(Book book);
 
