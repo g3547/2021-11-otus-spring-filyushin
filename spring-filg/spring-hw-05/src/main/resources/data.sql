@@ -7,5 +7,5 @@ values (1, 'Non fiction'),
        (2, 'Roman');
 
 INSERT INTO BOOK(BOOK_ID, TITLE, AUTHOR_ID, GENRE_ID)
-VALUES (1, 'title - t1', 1, 1),
+VALUES (1, 'title1', 1, 1),
        (2, 'title - 2', 2, 2);
