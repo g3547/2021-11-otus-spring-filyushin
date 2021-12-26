@@ -5,9 +5,10 @@ import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepository {
-    Book getBookById(long id);
+    Optional<Book> getBookById(long id);
 
     List<Book> getBooksByAuthor(Author author);
 
@@ -15,12 +16,12 @@ public interface BookRepository {
 
     List<Book> getBooks();
 
-    void addBook(Book newBook);
+    Book save(Book newBook);
 
     int countBooks();
 
-    void updateBook(Book book);
+    void update(Book book);
 
-    void deleteBook(Book book);
+    void delete(Book book);
 
 }
