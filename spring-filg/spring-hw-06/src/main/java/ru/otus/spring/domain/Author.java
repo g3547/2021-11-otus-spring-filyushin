@@ -16,8 +16,8 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Data
 public class Author {
-    @Column(name = "AUTHOR_ID")
     @Id
+    @Column(name = "AUTHOR_ID")
     private long id;
 
 

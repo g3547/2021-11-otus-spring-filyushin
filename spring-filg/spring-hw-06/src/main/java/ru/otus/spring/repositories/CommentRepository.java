@@ -8,4 +8,10 @@ import java.util.List;
 public interface CommentRepository {
 
     List<Comment> getBooksComments(Book book);
+
+    Comment save(Comment comment);
+
+    void delete(Comment comment);
+
+    void change(Comment comment);
 }

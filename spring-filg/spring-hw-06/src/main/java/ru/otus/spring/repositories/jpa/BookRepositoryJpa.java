@@ -1,7 +1,7 @@
 package ru.otus.spring.repositories.jpa;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
@@ -13,7 +13,7 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 public class BookRepositoryJpa implements BookRepository {
 
@@ -61,18 +61,26 @@ public class BookRepositoryJpa implements BookRepository {
     }
 
     @Override
-    public int countBooks() {
-        return 0;
+    public long countBooks() {
+        Object singleResult = em.createQuery("select count(b) from Book b ").getSingleResult();
+        return Long.valueOf(singleResult.toString());
     }
 
     @Override
     public List<Book> getBooksByAuthor(Author author) {
-        return null;
-
+        Query query = em.createQuery(
+                "select  b from Book b " +
+                        "where b.author = :author");
+        query.setParameter("author", author);
+        return query.getResultList();
     }
 
     @Override
     public List<Book> getBooksByGenre(Genre genre) {
-        return null;
+        Query query = em.createQuery(
+                "select  b from Book b " +
+                        "where b.genre = :genre");
+        query.setParameter("genre", genre);
+        return query.getResultList();
     }
 }

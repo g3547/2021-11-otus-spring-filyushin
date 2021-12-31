@@ -18,7 +18,7 @@ public interface BookRepository {
 
     Book save(Book newBook);
 
-    int countBooks();
+    long countBooks();
 
     void update(Book book);
 
