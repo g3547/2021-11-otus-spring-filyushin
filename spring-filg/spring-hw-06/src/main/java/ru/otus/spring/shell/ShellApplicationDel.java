@@ -19,7 +19,6 @@ public class ShellApplicationDel {
     private final CommentRepository commentRepository;
 
 
-
     @ShellMethod(value = "delete book", key = {"delB"})
     @Transactional
     public void deleteBookById(@ShellOption(defaultValue = "1") String bookId) {

@@ -24,6 +24,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
 
     @Override
     public Optional<Author> getAuthorById(long id) {
-       return Optional.ofNullable(em.find(Author.class,id));
+        return Optional.ofNullable(em.find(Author.class, id));
     }
 }

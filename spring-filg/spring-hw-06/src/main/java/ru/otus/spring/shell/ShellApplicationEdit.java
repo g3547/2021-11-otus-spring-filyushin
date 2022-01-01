@@ -34,7 +34,7 @@ public class ShellApplicationEdit {
         Comment comment = commentRepository.getBooksComments(
                 bookService.getBookById(
                         Long.parseLong(bookId)).get()).get(0);
-        Comment newComment = new Comment(comment.getId(),comment.getBook(),newValue);
+        Comment newComment = new Comment(comment.getId(), comment.getBook(), newValue);
         commentRepository.save(newComment);
         System.out.println("comment was : " + comment);
         System.out.println("comment now : " + comment);

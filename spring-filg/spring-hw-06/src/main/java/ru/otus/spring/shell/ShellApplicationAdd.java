@@ -30,8 +30,7 @@ public class ShellApplicationAdd {
         long id = bookService.countBooks() + 1;
         Book book = new Book(id,
                 title,
-                authorService.getAuthors().get(0),
-//                authorService.getAuthorById(Long.parseLong(authorId)).get(),
+                authorService.getAuthorById(Long.parseLong(authorId)).get(),
                 genreService.getGenres().get(Integer.parseInt(genreId)));
         bookService.save(book);
     }
