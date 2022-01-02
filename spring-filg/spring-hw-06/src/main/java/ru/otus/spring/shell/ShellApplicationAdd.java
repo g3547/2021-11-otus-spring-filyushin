@@ -25,13 +25,13 @@ public class ShellApplicationAdd {
     @ShellMethod(value = "add book", key = {"addB"})
     @Transactional
     public void addBook(@ShellOption(defaultValue = "Title") String title,
-                        @ShellOption(defaultValue = "0") String authorId,
+                        @ShellOption(defaultValue = "1") String authorId,
                         @ShellOption(defaultValue = "0") String genreId) {
         long id = bookService.countBooks() + 1;
         Book book = new Book(id,
                 title,
                 authorService.getAuthorById(Long.parseLong(authorId)).get(),
-                genreService.getGenres().get(Integer.parseInt(genreId)));
+                genreService.getGenreById(Integer.parseInt(genreId)).get());
         bookService.save(book);
     }
 
@@ -39,7 +39,8 @@ public class ShellApplicationAdd {
     @Transactional
     public void addBooksComment(@ShellOption(defaultValue = "1") String bookId,
                                 @ShellOption(defaultValue = "good Book") String commentString) {
-        Comment comment = new Comment(Long.valueOf(bookId), commentString);
+        Comment comment = new Comment(bookService.getBookById(Long.valueOf(bookId)).get(),
+                commentString);
         commentRepository.save(comment);
     }
 

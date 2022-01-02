@@ -3,6 +3,7 @@ package ru.otus.spring.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -18,25 +19,26 @@ import java.util.List;
 public class Book {
     @Column(name = "BOOK_ID")
     @Id
-    private  long id;
+    private long id;
 
     @Column(name = "TITLE")
-    private  String title;
+    private String title;
 
-    @OneToOne(targetEntity = Author.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Author.class)
     @JoinColumn(name = "AUTHOR_ID")
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 5)
-    private  Author author;
+    private Author author;
 
-    @OneToOne(targetEntity = Genre.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Genre.class)
     @JoinColumn(name = "GENRE_ID")
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 5)
-    private  Genre genre;
+    private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "BOOK_ID")
+    @ToString.Exclude
     private List<Comment> comments;
 
     public Book(long id, String title, Author author, Genre genre) {

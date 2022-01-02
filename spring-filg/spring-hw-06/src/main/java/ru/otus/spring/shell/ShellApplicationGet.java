@@ -47,6 +47,12 @@ public class ShellApplicationGet {
 
         print(authors);
     }
+    @ShellMethod(value = "get all Comments", key = {"getCs"})
+    public void getComments() {
+        List<Comment> authors = commentRepository.getComments();
+
+        print(authors);
+    }
 
     @ShellMethod(value = "get comment", key = {"getBC"})
     public void getBookComments(@ShellOption(defaultValue = "1") String bookId) {

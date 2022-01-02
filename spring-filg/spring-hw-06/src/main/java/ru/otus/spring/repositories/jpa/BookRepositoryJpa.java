@@ -22,7 +22,10 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public List<Book> getBooks() {
-        return em.createQuery("select b from Book b", Book.class).getResultList();
+        return em.createQuery("select b " +
+                "from Book b " +
+                "join fetch  b.author " +
+                "join fetch b.genre", Book.class).getResultList();
     }
 
     @Override
@@ -35,35 +38,20 @@ public class BookRepositoryJpa implements BookRepository {
     }
 
     @Override
-    public void update(Book book) {
-        Query query = em.createQuery(
-                "update Book b " +
-                        "set b.author = :author ," +
-                        "b.genre = :genre, " +
-                        "b.title = :title " +
-                        "where b.id = :id");
-        query.setParameter("author", book.getAuthor().getId());
-        query.setParameter("genre", book.getGenre().getId());
-        query.setParameter("title", book.getTitle());
-        query.setParameter("id", book.getId());
-        query.executeUpdate();
-    }
-
-    @Override
     public void delete(Book book) {
         em.remove(book);
     }
 
 
     @Override
+    // TODO: 02.01.2022 можно на джоин переписать
     public Optional<Book> getBookById(long id) {
         return Optional.ofNullable(em.find(Book.class, id));
     }
 
     @Override
     public long countBooks() {
-        Object singleResult = em.createQuery("select count(b) from Book b ").getSingleResult();
-        return Long.valueOf(singleResult.toString());
+        return   em.createQuery("select count(b) from Book b",Long.class).getSingleResult();
     }
 
     @Override

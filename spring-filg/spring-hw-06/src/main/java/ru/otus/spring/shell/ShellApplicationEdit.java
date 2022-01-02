@@ -22,7 +22,7 @@ public class ShellApplicationEdit {
 
         Book book = bookService.getBookById(Long.valueOf(id)).get();
         Book newBook = new Book(book.getId(), newName, book.getAuthor(), book.getGenre());
-        bookService.update(newBook);
+        bookService.save(newBook);
         System.out.println("book was : " + book);
         System.out.println("book now : " + newBook);
     }

@@ -20,8 +20,6 @@ public interface BookRepository {
 
     long countBooks();
 
-    void update(Book book);
-
     void delete(Book book);
 
 }

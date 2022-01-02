@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
-    public Comment(long book, String comment) {
+    public Comment(Book book, String comment) {
         this.book = book;
         this.comment = comment;
     }
@@ -23,8 +23,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "BOOK_ID")
-    private long book;
+    @ManyToOne
+    @JoinColumn(name = "BOOK_ID")
+    private Book book;
 
     @NotBlank
     @Column(name = "COMMENT",nullable = false)
