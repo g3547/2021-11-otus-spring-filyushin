@@ -42,9 +42,14 @@ public class BookRepositoryJpa implements BookRepository {
         em.remove(book);
     }
 
+    @Override
+    public void delete(long bookId) {
+        Book book = getBookById(bookId).orElse(null);
+        delete(book);
+    }
+
 
     @Override
-    // TODO: 02.01.2022 можно на джоин переписать
     public Optional<Book> getBookById(long id) {
         return Optional.ofNullable(em.find(Book.class, id));
     }

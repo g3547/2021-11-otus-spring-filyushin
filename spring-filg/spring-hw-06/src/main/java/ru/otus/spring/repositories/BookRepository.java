@@ -21,5 +21,6 @@ public interface BookRepository {
     long countBooks();
 
     void delete(Book book);
+    void delete(long bookId);
 
 }
