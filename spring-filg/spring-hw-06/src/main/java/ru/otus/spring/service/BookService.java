@@ -21,9 +21,12 @@ public interface BookService {
 
     boolean addBookComment(long bookId, String commentContent);
 
+    void changeBookComment(long bookId, String commentContent);
+
     boolean deleteBookComment(long commentId);
 
     List<Book> getBooksByAuthor(Author author);
+
     List<Book> getAllBooks();
 
 }

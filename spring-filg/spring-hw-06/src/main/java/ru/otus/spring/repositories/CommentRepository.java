@@ -13,7 +13,7 @@ public interface CommentRepository {
 
     Optional<Comment> getById(long commentId);
 
-    public long countComments();
+    long countComments();
 
     void delete(Comment comment);
 }

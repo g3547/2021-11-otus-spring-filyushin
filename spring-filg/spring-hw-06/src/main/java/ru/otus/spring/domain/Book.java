@@ -20,7 +20,7 @@ public class Book {
     @Id
     @Column(name = "BOOK_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOOK")
-    @SequenceGenerator(name = "SEQ_BOOK",allocationSize = 1)
+    @SequenceGenerator(name = "SEQ_BOOK", allocationSize = 1)
     private long id;
 
     @Column(name = "TITLE")
@@ -38,13 +38,13 @@ public class Book {
     @BatchSize(size = 5)
     private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class,mappedBy = "book")
+    @OneToMany(targetEntity = Comment.class, mappedBy = "book")
     @ToString.Exclude
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 5)
     private List<Comment> comments;
 
     public Book(long id, String title, Author author, Genre genre) {
-        this(id,title,author,genre,null);
+        this(id, title, author, genre, null);
     }
 }

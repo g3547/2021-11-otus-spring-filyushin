@@ -26,6 +26,7 @@ public class ShellApplicationDel {
         bookService.deleteBook(book);
         System.out.println("deleted book: " + book);
     }
+
     @ShellMethod(value = "delete author", key = {"delA"})
     @Transactional
     public void deleteAuthorById(@ShellOption(defaultValue = "1") long authorId) {
@@ -39,7 +40,7 @@ public class ShellApplicationDel {
     @Transactional
     public void deleteBooksComments(@ShellOption long commentId) {
 
-       bookService.deleteBookComment(commentId);
+        bookService.deleteBookComment(commentId);
     }
 
 }

@@ -26,12 +26,14 @@ public class ShellApplicationAdd {
 
         bookService.addBook(title, authorId, genreId);
     }
+
     @ShellMethod(value = "add author", key = {"addA"})
     @Transactional
     public void addAuthor(@ShellOption String fullName) {
 
         authorService.create(fullName);
     }
+
     @ShellMethod(value = "add genre", key = {"addG"})
     @Transactional
     public void addGenre(@ShellOption String name) {
@@ -43,7 +45,7 @@ public class ShellApplicationAdd {
     @Transactional
     public void addBooksComment(@ShellOption(defaultValue = "1") long bookId,
                                 @ShellOption(defaultValue = "good Book") String commentString) {
-         bookService.addBookComment(bookId, commentString);
+        bookService.addBookComment(bookId, commentString);
     }
 
 }

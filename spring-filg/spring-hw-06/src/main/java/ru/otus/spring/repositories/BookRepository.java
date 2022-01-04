@@ -12,8 +12,6 @@ public interface BookRepository {
 
     List<Book> getBooksByAuthor(Author author);
 
-    List<Book> getBooksByGenre(Genre genre);
-
     List<Book> getBooks();
 
     Book save(Book newBook);
@@ -21,6 +19,8 @@ public interface BookRepository {
     long countBooks();
 
     void delete(Book book);
+
     void delete(long bookId);
 
+    List<Book> getBooksByGenre(Genre genre);
 }

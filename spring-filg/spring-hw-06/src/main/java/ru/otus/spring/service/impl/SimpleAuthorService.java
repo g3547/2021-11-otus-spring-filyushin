@@ -27,7 +27,7 @@ public class SimpleAuthorService implements AuthorService {
         if (author != null) {
             author.setFullName(fullName);
             Author save = authorRepository.save(author);
-            System.out.println("was updated to"+ save.getFullName());
+            System.out.println("was updated to" + save.getFullName());
         } else throw new RuntimeException(NO_AUTHOR_FOUND);
     }
 

@@ -84,6 +84,19 @@ public class SimpleBookService implements BookService {
     }
 
     @Override
+    public void changeBookComment(long bookId, String commentContent) {
+
+        Book book = bookRepository.getBookById(bookId).orElse(null);
+        if (book==null)throw new RuntimeException(NULL_BOOK);
+        Comment comment =
+                book.getComments().get(0);
+        Comment newComment = new Comment(comment.getId(), commentContent, comment.getBook());
+        commentRepository.save(newComment);
+        System.out.println("comment was : " + comment);
+        System.out.println("comment now : " + comment);
+    }
+
+    @Override
     public boolean deleteBookComment(long commentId) {
         Comment comment = commentRepository.getById(commentId).orElse(null);
         if (comment == null) throw new RuntimeException(NULL_COMMENT);

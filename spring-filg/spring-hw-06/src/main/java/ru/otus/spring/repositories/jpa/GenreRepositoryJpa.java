@@ -28,6 +28,7 @@ public class GenreRepositoryJpa implements GenreRepository {
         return Optional.ofNullable(em.find(Genre.class, id));
 
     }
+
     @Override
     public Genre save(Genre genre) {
         if (genre.getId() == 0) {

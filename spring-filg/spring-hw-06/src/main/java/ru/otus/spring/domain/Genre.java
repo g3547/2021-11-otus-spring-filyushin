@@ -16,11 +16,11 @@ public class Genre {
     @Column(name = "GENRE_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COMMENT")
-    @SequenceGenerator(name = "SEQ_GENRE",allocationSize = 1)
-    private  long id;
+    @SequenceGenerator(name = "SEQ_GENRE", allocationSize = 1)
+    private long id;
 
 
     @NotNull
     @Column(name = "NAME")
-    private  String name;
+    private String name;
 }

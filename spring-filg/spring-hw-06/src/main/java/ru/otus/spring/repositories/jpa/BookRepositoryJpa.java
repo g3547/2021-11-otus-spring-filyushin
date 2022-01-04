@@ -48,7 +48,6 @@ public class BookRepositoryJpa implements BookRepository {
         delete(book);
     }
 
-
     @Override
     public Optional<Book> getBookById(long id) {
         return Optional.ofNullable(em.find(Book.class, id));
@@ -56,7 +55,7 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public long countBooks() {
-        return   em.createQuery("select count(b) from Book b",Long.class).getSingleResult();
+        return em.createQuery("select count(b) from Book b", Long.class).getSingleResult();
     }
 
     @Override

@@ -16,7 +16,7 @@ public class Author {
     @Id
     @Column(name = "AUTHOR_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_AUTHOR")
-    @SequenceGenerator(name = "SEQ_AUTHOR",allocationSize = 1)
+    @SequenceGenerator(name = "SEQ_AUTHOR", allocationSize = 1)
     private long id;
 
 

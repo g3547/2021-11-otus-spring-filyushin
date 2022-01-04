@@ -74,16 +74,16 @@ public class BookJpaTests {
     @DisplayName("должен отдавать книги по идентификатору")
     public void testGetById() {
         Book book = bookRepository.getBookById(1l).get();
-        assertThat(book).isNotNull().matches(b->b.getId()==1)
-                .matches(b->b.getTitle().equals(BOOK_TITLE1));
+        assertThat(book).isNotNull().matches(b -> b.getId() == 1)
+                .matches(b -> b.getTitle().equals(BOOK_TITLE1));
     }
 
     @Test
     @DisplayName("должен отдавать книги по автору")
     public void testGetByAuthor() {
         Book book = bookRepository.getBooksByAuthor(getTestAuthor()).get(0);
-        assertThat(book).isNotNull().matches(b->b.getId()==1)
-                .matches(b->b.getTitle().equals(BOOK_TITLE1));
+        assertThat(book).isNotNull().matches(b -> b.getId() == 1)
+                .matches(b -> b.getTitle().equals(BOOK_TITLE1));
     }
 
     @Test

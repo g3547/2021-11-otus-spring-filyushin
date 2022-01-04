@@ -47,6 +47,7 @@ public class ShellApplicationGet {
 
         print(authors);
     }
+
     @ShellMethod(value = "get all Comments", key = {"getCs"})
     public void getComments() {
         List<Comment> authors = bookService.getAllComments();
