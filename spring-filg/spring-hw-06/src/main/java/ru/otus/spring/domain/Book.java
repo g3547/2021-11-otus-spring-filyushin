@@ -3,11 +3,13 @@ package ru.otus.spring.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Entity
@@ -36,11 +38,13 @@ public class Book {
     @BatchSize(size = 5)
     private Genre genre;
 
-//    @OneToMany(targetEntity = Comment.class,orphanRemoval = true )
-//    @ToString.Exclude
-//    private List<Comment> comments;
+    @OneToMany(targetEntity = Comment.class,mappedBy = "book")
+    @ToString.Exclude
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 5)
+    private List<Comment> comments;
 
-//    public Book(long id, String title, Author author, Genre genre) {
-//        this(id,title,author,genre,null);
-//    }
+    public Book(long id, String title, Author author, Genre genre) {
+        this(id,title,author,genre,null);
+    }
 }

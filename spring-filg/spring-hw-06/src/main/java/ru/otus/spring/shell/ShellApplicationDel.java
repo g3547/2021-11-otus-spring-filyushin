@@ -5,7 +5,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.repositories.CommentRepository;
 import ru.otus.spring.service.AuthorService;
 import ru.otus.spring.service.BookService;
 
@@ -16,7 +15,6 @@ import javax.transaction.Transactional;
 public class ShellApplicationDel {
     private final BookService bookService;
     private final AuthorService authorService;
-    private final CommentRepository commentRepository;
 
 
     @ShellMethod(value = "delete book", key = {"delB"})
@@ -30,24 +28,18 @@ public class ShellApplicationDel {
     }
     @ShellMethod(value = "delete author", key = {"delA"})
     @Transactional
-    public void deleteAuthorById(@ShellOption(defaultValue = "1") String authorId) {
+    public void deleteAuthorById(@ShellOption(defaultValue = "1") long authorId) {
 
-        authorService.delete(Long.parseLong(authorId));
+        authorService.delete(authorId);
 
         System.out.println("deleted author: " + authorId);
     }
 
-//    @ShellMethod(value = "delete books comments", key = {"delBC"})
-//    @Transactional
-//    public void deleteBooksComments(@ShellOption(defaultValue = "1") String bookId) {
-//
-//        Book book = bookService.getBookById(Long.valueOf(bookId)).get();
-//        List<Comment> booksComments = book.getComments();
-//        for (Comment comment : booksComments) {
-//            commentRepository.delete(comment);
-//        }
-//
-//        System.out.println("no comment book: " + book);
-//    }
+    @ShellMethod(value = "delete books comments", key = {"delBC"})
+    @Transactional
+    public void deleteBooksComments(@ShellOption long commentId) {
+
+       bookService.deleteBookComment(commentId);
+    }
 
 }

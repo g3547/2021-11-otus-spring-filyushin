@@ -2,11 +2,12 @@ package ru.otus.spring.service;
 
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.Comment;
 
 import java.util.List;
 
 public interface BookService {
-    public void addBook(String title,long authorId,long genreId);
+    public void addBook(String title, long authorId, long genreId);
 
     void deleteBook(Book book);
 
@@ -16,10 +17,13 @@ public interface BookService {
 
     long countBooks();
 
-//    boolean addBookComment(long id, String content);
+    List<Comment> getAllComments();
 
-//    boolean deleteBookComment(long commentId);
+    boolean addBookComment(long bookId, String commentContent);
+
+    boolean deleteBookComment(long commentId);
 
     List<Book> getBooksByAuthor(Author author);
+    List<Book> getAllBooks();
 
 }

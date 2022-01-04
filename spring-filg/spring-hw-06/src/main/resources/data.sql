@@ -10,7 +10,7 @@ INSERT INTO BOOK(BOOK_ID, TITLE, AUTHOR_ID, GENRE_ID)
 VALUES (1, 'title1', 1, 1),
        (2, 'title - 2', 2, 2);
 
-/*INSERT INTO COMMENT(ID, BOOK_ID, COMMENT)
+INSERT INTO COMMENT(COMMENT_ID, BOOK_ID, COMMENT)
 VALUES (1, 1, 'ustal'),
        (2, 1, 'kogda zakonchitca?'),
-       (3, 2, 'krasava');*/
+       (3, 2, 'krasava');
