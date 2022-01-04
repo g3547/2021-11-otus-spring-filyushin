@@ -5,41 +5,49 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.domain.Comment;
-import ru.otus.spring.repositories.BookRepository;
 import ru.otus.spring.repositories.CommentRepository;
+import ru.otus.spring.service.AuthorService;
+import ru.otus.spring.service.BookService;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @RequiredArgsConstructor
 @ShellComponent
 public class ShellApplicationDel {
-    private final BookRepository bookService;
+    private final BookService bookService;
+    private final AuthorService authorService;
     private final CommentRepository commentRepository;
 
 
     @ShellMethod(value = "delete book", key = {"delB"})
     @Transactional
-    public void deleteBookById(@ShellOption(defaultValue = "1") String bookId) {
+    public void deleteBookById(@ShellOption(defaultValue = "1") long bookId) {
 
-        Book book = bookService.getBookById(Long.valueOf(bookId)).get();
+        Book book = bookService.getBookById(bookId);
 
-        bookService.delete(book);
+        bookService.deleteBook(book);
         System.out.println("deleted book: " + book);
     }
-
-    @ShellMethod(value = "delete books comments", key = {"delBC"})
+    @ShellMethod(value = "delete author", key = {"delA"})
     @Transactional
-    public void deleteBooksComments(@ShellOption(defaultValue = "1") String bookId) {
+    public void deleteAuthorById(@ShellOption(defaultValue = "1") String authorId) {
 
-        Book book = bookService.getBookById(Long.valueOf(bookId)).get();
-        List<Comment> booksComments = commentRepository.getBooksComments(book);
-        for (Comment comment : booksComments) {
-            commentRepository.delete(comment);
-        }
+        authorService.delete(Long.parseLong(authorId));
 
-        System.out.println("no comment book: " + book);
+        System.out.println("deleted author: " + authorId);
     }
+
+//    @ShellMethod(value = "delete books comments", key = {"delBC"})
+//    @Transactional
+//    public void deleteBooksComments(@ShellOption(defaultValue = "1") String bookId) {
+//
+//        Book book = bookService.getBookById(Long.valueOf(bookId)).get();
+//        List<Comment> booksComments = book.getComments();
+//        for (Comment comment : booksComments) {
+//            commentRepository.delete(comment);
+//        }
+//
+//        System.out.println("no comment book: " + book);
+//    }
 
 }

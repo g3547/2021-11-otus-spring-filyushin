@@ -10,4 +10,8 @@ public interface AuthorRepository {
     List<Author> getAuthors();
 
     Optional<Author> getAuthorById(long id);
+
+    Author save(Author author);
+
+    void delete(Author author);
 }

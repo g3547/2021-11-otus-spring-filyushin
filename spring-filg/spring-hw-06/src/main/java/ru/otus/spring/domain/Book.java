@@ -2,23 +2,23 @@ package ru.otus.spring.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.List;
 
+@RequiredArgsConstructor
 @Entity
-@Table(name = "BOOK")
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
+@Table(name = "BOOK")
+@AllArgsConstructor
 public class Book {
-    @Column(name = "BOOK_ID")
     @Id
+    @Column(name = "BOOK_ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOOK")
+    @SequenceGenerator(name = "SEQ_BOOK",allocationSize = 1)
     private long id;
 
     @Column(name = "TITLE")
@@ -36,15 +36,11 @@ public class Book {
     @BatchSize(size = 5)
     private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "BOOK_ID")
-    @ToString.Exclude
-    private List<Comment> comments;
+//    @OneToMany(targetEntity = Comment.class,orphanRemoval = true )
+//    @ToString.Exclude
+//    private List<Comment> comments;
 
-    public Book(long id, String title, Author author, Genre genre) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.genre = genre;
-    }
+//    public Book(long id, String title, Author author, Genre genre) {
+//        this(id,title,author,genre,null);
+//    }
 }

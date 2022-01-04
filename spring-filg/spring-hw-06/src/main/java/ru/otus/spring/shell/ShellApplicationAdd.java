@@ -4,12 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.spring.domain.Book;
-import ru.otus.spring.domain.Comment;
+import ru.otus.spring.domain.Author;
 import ru.otus.spring.repositories.AuthorRepository;
-import ru.otus.spring.repositories.BookRepository;
 import ru.otus.spring.repositories.CommentRepository;
 import ru.otus.spring.repositories.GenreRepository;
+import ru.otus.spring.service.BookService;
 
 import javax.transaction.Transactional;
 
@@ -17,7 +16,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class ShellApplicationAdd {
     private final AuthorRepository authorService;
-    private final BookRepository bookService;
+    private final BookService bookService;
     private final GenreRepository genreService;
     private final CommentRepository commentRepository;
 
@@ -26,22 +25,25 @@ public class ShellApplicationAdd {
     @Transactional
     public void addBook(@ShellOption(defaultValue = "Title") String title,
                         @ShellOption(defaultValue = "1") String authorId,
-                        @ShellOption(defaultValue = "0") String genreId) {
-        long id = bookService.countBooks() + 1;
-        Book book = new Book(id,
-                title,
-                authorService.getAuthorById(Long.parseLong(authorId)).get(),
-                genreService.getGenreById(Integer.parseInt(genreId)).get());
-        bookService.save(book);
+                        @ShellOption(defaultValue = "1") String genreId) {
+
+        bookService.addBook(title,Long.valueOf(authorId),Long.valueOf(genreId));
+    }
+    @ShellMethod(value = "add author", key = {"addA"})
+    @Transactional
+    public void addAuthor(@ShellOption String fullName) {
+
+        authorService.save(new Author(0,fullName));
     }
 
-    @ShellMethod(value = "add books comment", key = {"addBC"})
-    @Transactional
-    public void addBooksComment(@ShellOption(defaultValue = "1") String bookId,
-                                @ShellOption(defaultValue = "good Book") String commentString) {
-        Comment comment = new Comment(bookService.getBookById(Long.valueOf(bookId)).get(),
-                commentString);
-        commentRepository.save(comment);
-    }
+//    @ShellMethod(value = "add books comment", key = {"addBC"})
+//    @Transactional
+//    public void addBooksComment(@ShellOption(defaultValue = "1") String bookId,
+//                                @ShellOption(defaultValue = "good Book") String commentString) {
+//        Book book = bookService.getBookById(Long.valueOf(bookId));
+//        Comment comment = new Comment(commentRepository.countComments()+1,commentString,book);
+//        Comment save = commentRepository.save(comment);
+//        System.out.println("Saved with id "+save.getId() );
+//    }
 
 }

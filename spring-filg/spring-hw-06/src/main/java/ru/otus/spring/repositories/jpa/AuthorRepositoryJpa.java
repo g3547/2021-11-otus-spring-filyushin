@@ -1,7 +1,7 @@
 package ru.otus.spring.repositories.jpa;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.repositories.AuthorRepository;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Repository
+@Component
 public class AuthorRepositoryJpa implements AuthorRepository {
 
     @PersistenceContext
@@ -25,5 +25,19 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     @Override
     public Optional<Author> getAuthorById(long id) {
         return Optional.ofNullable(em.find(Author.class, id));
+    }
+
+    @Override
+    public Author save(Author author) {
+        if (author.getId() == 0) {
+            em.persist(author);
+            return author;
+        }
+        return em.merge(author);
+    }
+
+    @Override
+    public void delete(Author author) {
+        em.remove(author);
     }
 }

@@ -4,41 +4,51 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.domain.Comment;
-import ru.otus.spring.repositories.BookRepository;
-import ru.otus.spring.repositories.CommentRepository;
+import ru.otus.spring.service.AuthorService;
+import ru.otus.spring.service.BookService;
 
 @RequiredArgsConstructor
 @ShellComponent
 public class ShellApplicationEdit {
-    private final BookRepository bookService;
-    private final CommentRepository commentRepository;
+    private final BookService bookService;
+    private final AuthorService authorService;
+
+//    private final CommentRepository commentRepository;
 
 
     @ShellMethod(value = "update book", key = {"editB"})
+    @Transactional
     public void changeBookName(@ShellOption(defaultValue = "1") String id,
                                @ShellOption(defaultValue = "prefix") String newName) {
 
-        Book book = bookService.getBookById(Long.valueOf(id)).get();
+        Book book = bookService.getBookById(Long.valueOf(id));
         Book newBook = new Book(book.getId(), newName, book.getAuthor(), book.getGenre());
-        bookService.save(newBook);
+        bookService.saveBook(newBook);
         System.out.println("book was : " + book);
         System.out.println("book now : " + newBook);
     }
 
-    @ShellMethod(value = "update comment", key = {"editC"})
-    public void changeComment(@ShellOption(defaultValue = "1") String bookId,
-                              @ShellOption(defaultValue = "prefix") String newValue) {
-
-        Comment comment = commentRepository.getBooksComments(
-                bookService.getBookById(
-                        Long.parseLong(bookId)).get()).get(0);
-        Comment newComment = new Comment(comment.getId(), comment.getBook(), newValue);
-        commentRepository.save(newComment);
-        System.out.println("comment was : " + comment);
-        System.out.println("comment now : " + comment);
+    @ShellMethod(value = "update author", key = {"editA"})
+    @Transactional
+    public void changeAuthorName(@ShellOption(defaultValue = "1") long id,
+                                 @ShellOption(defaultValue = "prefix") String newName) {
+        authorService.update(id,newName);
     }
+
+//    @ShellMethod(value = "update comment", key = {"editC"})
+//    @Transactional
+//    public void changeComment(@ShellOption(defaultValue = "1") String bookId,
+//                              @ShellOption(defaultValue = "prefix") String newValue) {
+//
+//        Comment comment =
+//                bookService.getBookById(Long.parseLong(bookId)).get().getComments().get(0);
+//        Comment newComment = new Comment(comment.getId(), newValue, comment.getBook());
+//        commentRepository.save(newComment);
+//        System.out.println("comment was : " + comment);
+//        System.out.println("comment now : " + comment);
+//    }
 
 
 }

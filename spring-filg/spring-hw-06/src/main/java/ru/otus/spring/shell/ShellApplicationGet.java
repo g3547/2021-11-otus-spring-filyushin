@@ -6,17 +6,16 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.domain.Comment;
-import ru.otus.spring.repositories.AuthorRepository;
 import ru.otus.spring.repositories.BookRepository;
 import ru.otus.spring.repositories.CommentRepository;
+import ru.otus.spring.service.AuthorService;
 
 import java.util.List;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class ShellApplicationGet {
-    private final AuthorRepository authorService;
+    private final AuthorService authorService;
     private final BookRepository bookService;
     private final CommentRepository commentRepository;
 
@@ -30,7 +29,7 @@ public class ShellApplicationGet {
     @ShellMethod(value = "get book", key = {"getA"})
     public void getAuthorById(@ShellOption(defaultValue = "1") String id) {
 
-        Author author = authorService.getAuthorById(Long.valueOf(id)).get();
+        Author author = authorService.getById(Long.valueOf(id));
         System.out.println(author);
     }
 
@@ -43,33 +42,31 @@ public class ShellApplicationGet {
 
     @ShellMethod(value = "get all Authors", key = {"getAs"})
     public void getAuthors() {
-        List<Author> authors = authorService.getAuthors();
+        List<Author> authors = authorService.getAll();
 
         print(authors);
     }
-    @ShellMethod(value = "get all Comments", key = {"getCs"})
-    public void getComments() {
-        List<Comment> authors = commentRepository.getComments();
+//    @ShellMethod(value = "get all Comments", key = {"getCs"})
+//    public void getComments() {
+//        List<Comment> authors = commentRepository.getComments();
+//
+//        print(authors);
+//    }
 
-        print(authors);
-    }
-
-    @ShellMethod(value = "get comment", key = {"getBC"})
-    public void getBookComments(@ShellOption(defaultValue = "1") String bookId) {
-
-        Book book = bookService.getBookById(Long.valueOf(bookId)).get();
-        List<Comment> booksComments = commentRepository.getBooksComments(book);
-        print(booksComments);
-    }
+//    @ShellMethod(value = "get comment", key = {"getBC"})
+//    public void getBookComments(@ShellOption(defaultValue = "1") String bookId) {
+//
+//        Book book = bookService.getBookById(Long.valueOf(bookId)).get();
+//        List<Comment> booksComments = book.getComments();
+//        print(booksComments);
+//    }
 
     @ShellMethod(value = "print author's books", key = {"getAB"})
     public void getAuthorsBooks() {
-        List<Author> authors = authorService.getAuthors();
+        List<Author> authors = authorService.getAll();
         for (Author author : authors) {
             List<Book> booksByAuthor = bookService.getBooksByAuthor(author);
-            for (Book book : booksByAuthor) {
-                System.out.println(book);
-            }
+            print(booksByAuthor);
         }
     }
 
