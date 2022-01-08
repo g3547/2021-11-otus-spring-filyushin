@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.spring.domain.Book;
 import ru.otus.spring.service.AuthorService;
 import ru.otus.spring.service.BookService;
 
@@ -21,10 +20,8 @@ public class ShellApplicationDel {
     @Transactional
     public void deleteBookById(@ShellOption(defaultValue = "1") long bookId) {
 
-        Book book = bookService.getBookById(bookId);
-
-        bookService.deleteBook(book);
-        System.out.println("deleted book: " + book);
+        bookService.deleteBook(bookId);
+        System.out.println("deleted book: " + bookId);
     }
 
     @ShellMethod(value = "delete author", key = {"delA"})

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Comment;
-import ru.otus.spring.repositories.CommentRepository;
 import ru.otus.spring.service.AuthorService;
 import ru.otus.spring.service.BookService;
 
@@ -19,7 +18,6 @@ import java.util.List;
 public class ShellApplicationGet {
     private final AuthorService authorService;
     private final BookService bookService;
-    private final CommentRepository commentRepository;
 
     @ShellMethod(value = "get book", key = {"getB"})
     public void getBookById(@ShellOption(defaultValue = "1") long id) {
@@ -58,8 +56,7 @@ public class ShellApplicationGet {
     @ShellMethod(value = "get book comment", key = {"getBC"})
     @Transactional(readOnly = true)
     public void getBookComments(@ShellOption(defaultValue = "1") long bookId) {
-        Book book = bookService.getBookById(bookId);
-        List<Comment> booksComments = book.getComments();
+        List<Comment> booksComments = bookService.getBookComments(bookId);
         print(booksComments);
     }
 

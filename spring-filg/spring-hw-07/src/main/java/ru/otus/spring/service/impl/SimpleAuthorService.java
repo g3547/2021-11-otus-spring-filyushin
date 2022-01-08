@@ -13,8 +13,6 @@ import java.util.List;
 public class SimpleAuthorService implements AuthorService {
     private final AuthorRepository authorRepository;
 
-    private final String NO_AUTHOR_FOUND = "no author found by id";
-
     @Override
     public long create(String fullName) {
         Author author = new Author(0, fullName);
@@ -23,33 +21,26 @@ public class SimpleAuthorService implements AuthorService {
 
     @Override
     public void update(long id, String fullName) {
-        Author author = authorRepository.getAuthorById(id).orElse(null);
-        if (author != null) {
-            author.setFullName(fullName);
-            Author save = authorRepository.save(author);
-            System.out.println("was updated to" + save.getFullName());
-        } else throw new RuntimeException(NO_AUTHOR_FOUND);
+        Author author = authorRepository.findAuthorById(id).orElseThrow();
+        author.setFullName(fullName);
+        Author save = authorRepository.save(author);
+        System.out.println("was updated to" + save.getFullName());
     }
 
     @Override
     public Author getById(long id) {
-        Author author = authorRepository.getAuthorById(id).orElse(null);
-        if (author != null) {
-            return author;
-        } else throw new RuntimeException(NO_AUTHOR_FOUND);
-
+        Author author = authorRepository.findAuthorById(id).orElseThrow();
+        return author;
     }
 
     @Override
     public List<Author> getAll() {
-        return authorRepository.getAuthors();
+        return authorRepository.findAll();
     }
 
     @Override
     public void delete(long id) {
-        Author author = authorRepository.getAuthorById(id).orElse(null);
-        if (author != null) {
-            authorRepository.delete(author);
-        } else throw new RuntimeException(NO_AUTHOR_FOUND);
+        Author author = authorRepository.findAuthorById(id).orElseThrow();
+        authorRepository.delete(author);
     }
 }

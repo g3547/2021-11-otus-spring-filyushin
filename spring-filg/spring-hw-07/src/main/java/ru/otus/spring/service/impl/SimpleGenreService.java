@@ -13,21 +13,16 @@ import java.util.List;
 public class SimpleGenreService implements GenreService {
 
     private final GenreRepository genreRepository;
-    static final String NULL_GENRE = "Didn't find genre";
-
 
     @Override
     public List<Genre> getGenres() {
-        return genreRepository.getGenres();
+        return genreRepository.findAll();
     }
 
     @Override
     public Genre getGenreById(long id) {
-        Genre genreById = genreRepository.getGenreById(id).orElse(null);
-        if (genreById != null) {
-            return genreById;
-        }
-        throw new RuntimeException(NULL_GENRE);
+        Genre genreById = genreRepository.findGenreById(id).orElseThrow();
+        return genreById;
     }
 
     @Override
@@ -38,9 +33,7 @@ public class SimpleGenreService implements GenreService {
 
     @Override
     public void delete(long id) {
-        Genre genre = genreRepository.getGenreById(id).orElse(null);
-        if (genre != null) {
-            genreRepository.delete(genre);
-        } else throw new RuntimeException(NULL_GENRE);
+        Genre genre = genreRepository.findGenreById(id).orElseThrow();
+        genreRepository.delete(genre);
     }
 }

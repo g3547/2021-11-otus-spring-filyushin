@@ -21,28 +21,21 @@ public class SimpleBookService implements BookService {
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
     static final String NULL_BOOK = "Didn't find book";
-    static final String NULL_COMMENT = "Didn't find comments";
 
     @Override
     public void addBook(String title, long authorId, long genreId) {
         Book book = new Book(0, title,
-                authorRepository.getAuthorById(authorId).get(),
-                genreRepository.getGenreById(genreId).get());
+                authorRepository.findAuthorById(authorId).get(),
+                genreRepository.findGenreById(genreId).get());
 
-        if (book != null) {
-            bookRepository.save(book);
-        } else {
-            throw new RuntimeException(NULL_BOOK);
-        }
+        bookRepository.save(book);
+
     }
 
     @Override
-    public void deleteBook(Book book) {
-        if (book != null) {
-            bookRepository.delete(book);
-        } else {
-            throw new RuntimeException(NULL_BOOK);
-        }
+    public void deleteBook(Long bookId) {
+        Book book = bookRepository.findBookById(bookId).orElseThrow();
+        bookRepository.delete(book);
     }
 
     @Override
@@ -56,25 +49,29 @@ public class SimpleBookService implements BookService {
 
     @Override
     public Book getBookById(long id) {
-        Book book = bookRepository.getBookById(id).orElse(null);
-        if (book == null) throw new RuntimeException(NULL_BOOK);
+        Book book = bookRepository.findBookById(id).orElseThrow();
         return book;
     }
 
     @Override
+    public List<Comment> getBookComments(long id) {
+        Book book = bookRepository.findBookById(id).orElseThrow();
+        return book.getComments();
+    }
+
+    @Override
     public long countBooks() {
-        return bookRepository.countBooks();
+        return bookRepository.count();
     }
 
     @Override
     public List<Comment> getAllComments() {
-        return commentRepository.getComments();
+        return commentRepository.findAll();
     }
 
     @Override
     public boolean addBookComment(long id, String content) {
-        Book book = bookRepository.getBookById(id).orElse(null);
-        if (book == null) throw new RuntimeException(NULL_BOOK);
+        Book book = bookRepository.findBookById(id).orElseThrow();
 
         Comment comment = new Comment(0, content, book);
         Comment save = commentRepository.save(comment);
@@ -86,8 +83,7 @@ public class SimpleBookService implements BookService {
     @Override
     public void changeBookComment(long bookId, String commentContent) {
 
-        Book book = bookRepository.getBookById(bookId).orElse(null);
-        if (book==null)throw new RuntimeException(NULL_BOOK);
+        Book book = bookRepository.findBookById(bookId).orElseThrow();
         Comment comment =
                 book.getComments().get(0);
         Comment newComment = new Comment(comment.getId(), commentContent, comment.getBook());
@@ -98,8 +94,7 @@ public class SimpleBookService implements BookService {
 
     @Override
     public boolean deleteBookComment(long commentId) {
-        Comment comment = commentRepository.getById(commentId).orElse(null);
-        if (comment == null) throw new RuntimeException(NULL_COMMENT);
+        Comment comment = commentRepository.findById(commentId).orElseThrow();
 
         commentRepository.delete(comment);
         System.out.println("success delete comment " + commentId);
@@ -108,12 +103,12 @@ public class SimpleBookService implements BookService {
 
     @Override
     public List<Book> getBooksByAuthor(Author author) {
-        return bookRepository.getBooksByAuthor(author);
+        return bookRepository.findBooksByAuthor(author);
     }
 
     @Override
     public List<Book> getAllBooks() {
         System.out.println("start searching for books");
-        return bookRepository.getBooks();
+        return bookRepository.findAll();
     }
 }

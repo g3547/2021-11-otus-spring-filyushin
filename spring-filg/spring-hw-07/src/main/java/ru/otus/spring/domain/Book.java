@@ -38,7 +38,7 @@ public class Book {
     @BatchSize(size = 5)
     private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class, mappedBy = "book")
+    @OneToMany(targetEntity = Comment.class, mappedBy = "book",cascade = CascadeType.ALL)
     @ToString.Exclude
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 5)

@@ -9,11 +9,12 @@ import java.util.List;
 public interface BookService {
     public void addBook(String title, long authorId, long genreId);
 
-    void deleteBook(Book book);
+    void deleteBook(Long bookId);
 
     void saveBook(Book book);
 
     Book getBookById(long id);
+    List<Comment> getBookComments(long id);
 
     long countBooks();
 
