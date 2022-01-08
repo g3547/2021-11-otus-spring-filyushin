@@ -9,8 +9,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.Comment;
 import ru.otus.spring.domain.Genre;
 import ru.otus.spring.repositories.BookRepository;
+import ru.otus.spring.repositories.CommentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +23,8 @@ public class BookJpaTests {
     private TestEntityManager em;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     private static final String BOOK_TITLE1 = "title1";
     private static final String BOOK_TITLE = "Korgi dog";
@@ -62,6 +66,17 @@ public class BookJpaTests {
     }
 
     @Test
+    @DisplayName("должен менять книгу для комментария")
+    public void testEditBookForComment() {
+        Book bookBefore = em.find(Book.class, 2l);
+
+        commentRepository.updateCommentsBookId(1, bookBefore);
+        Comment cAfter = em.find(Comment.class, 1L);
+
+        assertThat(cAfter).matches(c -> c.getBook().getId() == 2);
+    }
+
+    @Test
     @DisplayName("должен считать книги")
     public void testCount() {
         long countBooks = bookRepository.count();
@@ -80,6 +95,14 @@ public class BookJpaTests {
     @DisplayName("должен отдавать книги по автору")
     public void testGetByAuthor() {
         Book book = bookRepository.findBooksByAuthor(getTestAuthor()).get(0);
+        assertThat(book).isNotNull().matches(b -> b.getId() == 1)
+                .matches(b -> b.getTitle().equals(BOOK_TITLE1));
+    }
+
+    @Test
+    @DisplayName("должен отдавать книги  c 1 в названии")
+    public void testGetBookWith1inTitle() {
+        Book book = bookRepository.findBookWith1inTitle().get();
         assertThat(book).isNotNull().matches(b -> b.getId() == 1)
                 .matches(b -> b.getTitle().equals(BOOK_TITLE1));
     }

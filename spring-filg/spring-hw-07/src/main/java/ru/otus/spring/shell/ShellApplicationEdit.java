@@ -45,5 +45,12 @@ public class ShellApplicationEdit {
         bookService.changeBookComment(bookId, newValue);
     }
 
+    @ShellMethod(value = "update comment", key = {"editCB"})
+    @Transactional
+    public void changeBookForComment(@ShellOption(defaultValue = "1") long commentId,
+                                     long bookId) {
+        bookService.changeBookForComment(commentId, bookId);
+    }
+
 
 }

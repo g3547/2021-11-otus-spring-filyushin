@@ -54,6 +54,12 @@ public class SimpleBookService implements BookService {
     }
 
     @Override
+    public Book findBookWith1inTitle() {
+        Book book = bookRepository.findBookWith1inTitle().orElseThrow();
+        return book;
+    }
+
+    @Override
     public List<Comment> getBookComments(long id) {
         Book book = bookRepository.findBookById(id).orElseThrow();
         return book.getComments();
@@ -90,6 +96,14 @@ public class SimpleBookService implements BookService {
         commentRepository.save(newComment);
         System.out.println("comment was : " + comment);
         System.out.println("comment now : " + comment);
+    }
+
+    @Override
+    public void changeBookForComment(long commentId, long newBookId) {
+        Book newBook = bookRepository.findBookById(newBookId).orElseThrow();
+
+        Comment comment = commentRepository.findById(commentId).orElseThrow();
+        commentRepository.updateCommentsBookId(commentId, newBook);
     }
 
     @Override

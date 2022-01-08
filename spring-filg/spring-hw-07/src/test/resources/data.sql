@@ -13,3 +13,6 @@ values (1, 'Non fiction'),
 INSERT INTO BOOK(BOOK_ID, TITLE, AUTHOR_ID, GENRE_ID)
 VALUES (1, 'title1', 3, 1),
        (2, 'title2', 2, 2);
+
+INSERT INTO COMMENT(COMMENT_ID, BOOK_ID, COMMENT)
+VALUES (1, 1, 'kaef');

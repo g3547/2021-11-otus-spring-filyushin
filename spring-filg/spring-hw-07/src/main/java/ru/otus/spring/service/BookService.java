@@ -7,13 +7,16 @@ import ru.otus.spring.domain.Comment;
 import java.util.List;
 
 public interface BookService {
-    public void addBook(String title, long authorId, long genreId);
+    void addBook(String title, long authorId, long genreId);
 
     void deleteBook(Long bookId);
 
     void saveBook(Book book);
 
     Book getBookById(long id);
+
+    Book findBookWith1inTitle();
+
     List<Comment> getBookComments(long id);
 
     long countBooks();
@@ -23,6 +26,8 @@ public interface BookService {
     boolean addBookComment(long bookId, String commentContent);
 
     void changeBookComment(long bookId, String commentContent);
+
+    void changeBookForComment(long commentId, long newBookId);
 
     boolean deleteBookComment(long commentId);
 

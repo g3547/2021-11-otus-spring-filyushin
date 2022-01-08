@@ -26,6 +26,12 @@ public class ShellApplicationGet {
         System.out.println(book);
     }
 
+    @ShellMethod(value = "get book With 1 inTitle", key = {"getB1"})
+    public void findBookWith1inTitle() {
+        Book book = bookService.findBookWith1inTitle();
+        System.out.println(book);
+    }
+
     @ShellMethod(value = "get book", key = {"getA"})
     public void getAuthorById(@ShellOption(defaultValue = "1") long id) {
 
