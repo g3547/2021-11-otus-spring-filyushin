@@ -21,7 +21,7 @@ public class SimpleGenreService implements GenreService {
 
     @Override
     public Genre getGenreById(long id) {
-        Genre genreById = genreRepository.findGenreById(id).orElseThrow();
+        Genre genreById = genreRepository.findById(id).orElseThrow();
         return genreById;
     }
 
@@ -33,7 +33,7 @@ public class SimpleGenreService implements GenreService {
 
     @Override
     public void delete(long id) {
-        Genre genre = genreRepository.findGenreById(id).orElseThrow();
+        Genre genre = genreRepository.findById(id).orElseThrow();
         genreRepository.delete(genre);
     }
 }

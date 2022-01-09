@@ -11,6 +11,7 @@ import ru.otus.spring.repositories.CommentRepository;
 import ru.otus.spring.repositories.GenreRepository;
 import ru.otus.spring.service.BookService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,10 +24,11 @@ public class SimpleBookService implements BookService {
     static final String NULL_BOOK = "Didn't find book";
 
     @Override
+    @Transactional
     public void addBook(String title, long authorId, long genreId) {
         Book book = new Book(0, title,
                 authorRepository.findAuthorById(authorId).get(),
-                genreRepository.findGenreById(genreId).get());
+                genreRepository.findById(genreId).get());
 
         bookRepository.save(book);
 

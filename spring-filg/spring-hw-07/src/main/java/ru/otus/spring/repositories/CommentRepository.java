@@ -8,15 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Comment;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    List<Comment> findAll();
-
     Optional<Comment> findById(long commentId);
-
 
     @Modifying
     @Transactional
