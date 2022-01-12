@@ -22,5 +22,7 @@
 <!--        <module>spring-hw-03</module>-->
 <!--        <module>spring-hw-04</module>-->
         <module>spring-hw-05</module>
+        <module>spring-hw-06</module>
+        <module>spring-hw-07</module>
     </modules>
 </project>

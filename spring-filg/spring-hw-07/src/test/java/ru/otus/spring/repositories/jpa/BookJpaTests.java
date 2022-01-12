@@ -9,19 +9,22 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.Comment;
 import ru.otus.spring.domain.Genre;
 import ru.otus.spring.repositories.BookRepository;
+import ru.otus.spring.repositories.CommentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Репозиторий на основе Jpa для работы с книгами ")
 @DataJpaTest
-//@Import(BookRepositoryJpa.class)
 public class BookJpaTests {
     @Autowired
     private TestEntityManager em;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     private static final String BOOK_TITLE1 = "title1";
     private static final String BOOK_TITLE = "Korgi dog";
@@ -35,11 +38,11 @@ public class BookJpaTests {
     @Test
     @DisplayName("должен создавать книги")
     public void testCreation() {
-        long countBooks = bookRepository.countBooks();
+        long countBooks = bookRepository.count();
 
         Book book = new Book(0, BOOK_TITLE, getTestAuthor(), getTestGenre());
         Book savedBook = bookRepository.save(book);
-        long countBooksAfter = bookRepository.countBooks();
+        long countBooksAfter = bookRepository.count();
 
         assertThat(savedBook.getId()).isGreaterThan(0);
 
@@ -63,16 +66,27 @@ public class BookJpaTests {
     }
 
     @Test
+    @DisplayName("должен менять книгу для комментария")
+    public void testEditBookForComment() {
+        Book bookBefore = em.find(Book.class, 2l);
+
+        commentRepository.updateCommentsBookId(1, bookBefore);
+        Comment cAfter = em.find(Comment.class, 1L);
+
+        assertThat(cAfter).matches(c -> c.getBook().getId() == 2);
+    }
+
+    @Test
     @DisplayName("должен считать книги")
     public void testCount() {
-        long countBooks = bookRepository.countBooks();
+        long countBooks = bookRepository.count();
         Assertions.assertEquals(2l, countBooks);
     }
 
     @Test
     @DisplayName("должен отдавать книги по идентификатору")
     public void testGetById() {
-        Book book = bookRepository.getBookById(1l).get();
+        Book book = bookRepository.findBookById(1l).get();
         assertThat(book).isNotNull().matches(b -> b.getId() == 1)
                 .matches(b -> b.getTitle().equals(BOOK_TITLE1));
     }
@@ -80,7 +94,15 @@ public class BookJpaTests {
     @Test
     @DisplayName("должен отдавать книги по автору")
     public void testGetByAuthor() {
-        Book book = bookRepository.getBooksByAuthor(getTestAuthor()).get(0);
+        Book book = bookRepository.findBooksByAuthor(getTestAuthor()).get(0);
+        assertThat(book).isNotNull().matches(b -> b.getId() == 1)
+                .matches(b -> b.getTitle().equals(BOOK_TITLE1));
+    }
+
+    @Test
+    @DisplayName("должен отдавать книги  c 1 в названии")
+    public void testGetBookWith1inTitle() {
+        Book book = bookRepository.findBookWith1inTitle().get();
         assertThat(book).isNotNull().matches(b -> b.getId() == 1)
                 .matches(b -> b.getTitle().equals(BOOK_TITLE1));
     }
@@ -92,7 +114,7 @@ public class BookJpaTests {
         assertThat(firstBook).isNotNull();
 
         em.detach(firstBook);
-        bookRepository.delete(FIRST_BOOK_ID);
+        bookRepository.delete(firstBook);
 
         val deletedBook = em.find(Book.class, FIRST_BOOK_ID);
 
