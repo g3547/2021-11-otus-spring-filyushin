@@ -24,5 +24,6 @@
         <module>spring-hw-05</module>
         <module>spring-hw-06</module>
         <module>spring-hw-07</module>
+        <module>spring-hw-08</module>
     </modules>
 </project>
