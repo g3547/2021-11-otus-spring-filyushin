@@ -18,7 +18,7 @@ public class ShellApplicationDel {
 
     @ShellMethod(value = "delete book", key = {"delB"})
     @Transactional
-    public void deleteBookById(@ShellOption(defaultValue = "1") long bookId) {
+    public void deleteBookById(@ShellOption(defaultValue = "1") String bookId) {
 
         bookService.deleteBook(bookId);
         System.out.println("deleted book: " + bookId);
@@ -26,7 +26,7 @@ public class ShellApplicationDel {
 
     @ShellMethod(value = "delete author", key = {"delA"})
     @Transactional
-    public void deleteAuthorById(@ShellOption(defaultValue = "1") long authorId) {
+    public void deleteAuthorById(@ShellOption(defaultValue = "1") String authorId) {
 
         authorService.delete(authorId);
 
@@ -35,7 +35,7 @@ public class ShellApplicationDel {
 
     @ShellMethod(value = "delete books comments", key = {"delBC"})
     @Transactional
-    public void deleteBooksComments(@ShellOption long commentId) {
+    public void deleteBooksComments(@ShellOption String commentId) {
 
         bookService.deleteBookComment(commentId);
     }

@@ -7,27 +7,28 @@ import ru.otus.spring.domain.Comment;
 import java.util.List;
 
 public interface BookService {
-    void addBook(String title, long authorId, long genreId);
+    void addBook(String title, String authorId, String genreId);
 
-    void deleteBook(Long bookId);
+    void deleteBook(String bookId);
 
     void saveBook(Book book);
 
-    Book getBookById(long id);
+    Book getBookById(String id);
 
-    List<Comment> getBookComments(long id);
+    Book getBookByTitle(String title);
+
+    List<Comment> getBookComments(String id);
 
     long countBooks();
 
     List<Comment> getAllComments();
 
-    boolean addBookComment(long bookId, String commentContent);
+    boolean addBookComment(String bookId, String commentContent);
 
-    void changeBookComment(long bookId, String commentContent);
+    void changeBookComment(String bookId, String commentContent);
 
-    void changeBookForComment(long commentId, long newBookId);
 
-    boolean deleteBookComment(long commentId);
+    boolean deleteBookComment(String commentId);
 
     List<Book> getBooksByAuthor(Author author);
 

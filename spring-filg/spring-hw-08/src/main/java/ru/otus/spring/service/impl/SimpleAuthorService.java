@@ -14,13 +14,13 @@ public class SimpleAuthorService implements AuthorService {
     private final AuthorRepository authorRepository;
 
     @Override
-    public long create(String fullName) {
-        Author author = new Author(0, fullName);
+    public String create(String fullName) {
+        Author author = new Author(fullName);
         return authorRepository.save(author).getId();
     }
 
     @Override
-    public void update(long id, String fullName) {
+    public void update(String id, String fullName) {
         Author author = authorRepository.findAuthorById(id).orElseThrow();
         author.setFullName(fullName);
         Author save = authorRepository.save(author);
@@ -28,7 +28,7 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     @Override
-    public Author getById(long id) {
+    public Author getById(String id) {
         Author author = authorRepository.findAuthorById(id).orElseThrow();
         return author;
     }
@@ -39,7 +39,7 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(String id) {
         Author author = authorRepository.findAuthorById(id).orElseThrow();
         authorRepository.delete(author);
     }

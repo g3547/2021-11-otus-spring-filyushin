@@ -21,10 +21,10 @@ public class ShellApplicationEdit {
 
     @ShellMethod(value = "update book", key = {"editB"})
     @Transactional
-    public void changeBookName(@ShellOption(defaultValue = "1") String id,
+    public void changeBookName(@ShellOption(defaultValue = "title1") String title,
                                @ShellOption(defaultValue = "prefix") String newName) {
 
-        Book book = bookService.getBookById(Long.valueOf(id));
+        Book book = bookService.getBookByTitle(title);
         Book newBook = new Book(book.getId(), newName, book.getAuthor(), book.getGenre());
         bookService.saveBook(newBook);
         System.out.println("book was : " + book);
@@ -33,23 +33,16 @@ public class ShellApplicationEdit {
 
     @ShellMethod(value = "update author", key = {"editA"})
     @Transactional
-    public void changeAuthorName(@ShellOption(defaultValue = "1") long id,
+    public void changeAuthorName(@ShellOption(defaultValue = "1") String id,
                                  @ShellOption(defaultValue = "prefix") String newName) {
         authorService.update(id, newName);
     }
 
     @ShellMethod(value = "update comment", key = {"editC"})
     @Transactional
-    public void changeComment(@ShellOption(defaultValue = "1") long bookId,
+    public void changeComment(@ShellOption(defaultValue = "1") String bookId,
                               @ShellOption(defaultValue = "prefix") String newValue) {
         bookService.changeBookComment(bookId, newValue);
-    }
-
-    @ShellMethod(value = "update comment", key = {"editCB"})
-    @Transactional
-    public void changeBookForComment(@ShellOption(defaultValue = "1") long commentId,
-                                     long bookId) {
-        bookService.changeBookForComment(commentId, bookId);
     }
 
 

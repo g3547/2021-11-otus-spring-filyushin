@@ -20,15 +20,13 @@ public class SimpleGenreService implements GenreService {
     }
 
     @Override
-    public Genre getGenreById(long id) {
-        Genre genreById = genreRepository.findById(id).orElseThrow();
-        return genreById;
+    public Genre getGenreById(String id) {
+        return genreRepository.findById(id).orElseThrow();
     }
 
     @Override
-    public long create(String name) {
-        Genre genre = new Genre(0, name);
-        return genreRepository.save(genre).getId();
+    public String create(String name) {
+        return genreRepository.save(new Genre(name)).getId();
     }
 
     @Override

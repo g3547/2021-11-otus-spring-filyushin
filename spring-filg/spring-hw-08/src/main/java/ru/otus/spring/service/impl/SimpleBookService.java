@@ -25,8 +25,8 @@ public class SimpleBookService implements BookService {
 
     @Override
     @Transactional
-    public void addBook(String title, long authorId, long genreId) {
-        Book book = new Book(0, title,
+    public void addBook(String title, String authorId, String genreId) {
+        Book book = new Book(title,
                 authorRepository.findAuthorById(authorId).get(),
                 genreRepository.findById(genreId).get());
 
@@ -35,7 +35,7 @@ public class SimpleBookService implements BookService {
     }
 
     @Override
-    public void deleteBook(Long bookId) {
+    public void deleteBook(String bookId) {
         Book book = bookRepository.findBookById(bookId).orElseThrow();
         bookRepository.delete(book);
     }
@@ -50,16 +50,21 @@ public class SimpleBookService implements BookService {
     }
 
     @Override
-    public Book getBookById(long id) {
-        Book book = bookRepository.findBookById(id).orElseThrow();
-        return book;
+    public Book getBookById(String id) {
+        return bookRepository.findBookById(id).orElseThrow();
+    }
+
+    @Override
+    public Book getBookByTitle(String title) {
+        return bookRepository.findBookByTitle(title).orElseThrow();
     }
 
 
     @Override
-    public List<Comment> getBookComments(long id) {
-        Book book = bookRepository.findBookById(id).orElseThrow();
-        return book.getComments();
+    public List<Comment> getBookComments(String title) {
+        Book book = bookRepository.findBookByTitle(title).orElseThrow();
+
+        return commentRepository.findAllByBookId(book.getId());
     }
 
     @Override
@@ -73,10 +78,10 @@ public class SimpleBookService implements BookService {
     }
 
     @Override
-    public boolean addBookComment(long id, String content) {
-        Book book = bookRepository.findBookById(id).orElseThrow();
+    public boolean addBookComment(String title, String content) {
+        Book book = bookRepository.findBookByTitle(title).orElseThrow();
 
-        Comment comment = new Comment(0, content, book);
+        Comment comment = new Comment(content, book.getId());
         Comment save = commentRepository.save(comment);
 
         System.out.println("Saved with id " + save.getId());
@@ -84,27 +89,20 @@ public class SimpleBookService implements BookService {
     }
 
     @Override
-    public void changeBookComment(long bookId, String commentContent) {
+    public void changeBookComment(String bookId, String commentContent) {
 
         Book book = bookRepository.findBookById(bookId).orElseThrow();
         Comment comment =
                 book.getComments().get(0);
-        Comment newComment = new Comment(comment.getId(), commentContent, comment.getBook());
+        Comment newComment = new Comment(comment.getId(), commentContent, comment.getBookId());
         commentRepository.save(newComment);
         System.out.println("comment was : " + comment);
         System.out.println("comment now : " + comment);
     }
 
-    @Override
-    public void changeBookForComment(long commentId, long newBookId) {
-        Book newBook = bookRepository.findBookById(newBookId).orElseThrow();
-
-        Comment comment = commentRepository.findById(commentId).orElseThrow();
-        commentRepository.updateCommentsBookId(commentId, newBook);
-    }
 
     @Override
-    public boolean deleteBookComment(long commentId) {
+    public boolean deleteBookComment(String commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
 
         commentRepository.delete(comment);

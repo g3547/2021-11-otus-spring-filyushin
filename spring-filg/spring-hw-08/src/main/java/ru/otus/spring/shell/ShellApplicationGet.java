@@ -20,15 +20,15 @@ public class ShellApplicationGet {
     private final BookService bookService;
 
     @ShellMethod(value = "get book", key = {"getB"})
-    public void getBookById(@ShellOption(defaultValue = "1") long id) {
+    public void getBookById(@ShellOption(defaultValue = "title1") String title) {
 
-        Book book = bookService.getBookById(id);
+        Book book = bookService.getBookByTitle(title);
         System.out.println(book);
     }
 
 
     @ShellMethod(value = "get book", key = {"getA"})
-    public void getAuthorById(@ShellOption(defaultValue = "1") long id) {
+    public void getAuthorById(@ShellOption(defaultValue = "1") String id) {
 
         Author author = authorService.getById(id);
         System.out.println(author);
@@ -56,8 +56,8 @@ public class ShellApplicationGet {
 
     @ShellMethod(value = "get book comment", key = {"getBC"})
     @Transactional(readOnly = true)
-    public void getBookComments(@ShellOption(defaultValue = "1") long bookId) {
-        List<Comment> booksComments = bookService.getBookComments(bookId);
+    public void getBookComments(@ShellOption(defaultValue = "title1") String bookTitle) {
+        List<Comment> booksComments = bookService.getBookComments(bookTitle);
         print(booksComments);
     }
 

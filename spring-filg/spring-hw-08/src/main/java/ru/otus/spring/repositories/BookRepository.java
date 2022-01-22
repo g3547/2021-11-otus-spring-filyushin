@@ -1,14 +1,18 @@
 package ru.otus.spring.repositories;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface BookRepository extends MongoRepository<Book, Long> {
-    Optional<Book> findBookById(long bookId);
+public interface BookRepository extends CrudRepository<Book, Long> {
+    Optional<Book> findBookById(String bookId);
+
+    Optional<Book> findBookByTitle(String title);
+
+    List<Book> findAll();
 
     List<Book> findBooksByAuthor(Author author);
 }
