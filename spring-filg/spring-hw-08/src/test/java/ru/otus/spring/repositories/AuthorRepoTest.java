@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.ComponentScan;
+import ru.otus.spring.domain.Author;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,16 +19,32 @@ public class AuthorRepoTest {
     @Autowired
     private AuthorRepository authorRepository;
 
-    @DisplayName(" возвращать корректный список авторов")
+    private static final Author TEST_AUTHOR = new Author("tester test");
+
+
+    @DisplayName(" возвращать корректное кол-во авторов")
     @Test
-    void shouldReturnCorrectKnowledgeList() {
+    void shouldReturnCorrectAuthorList() {
         val authors = authorRepository.findAll();
         val author = authors.get(0);
-        val experience = teacher.getExperience();
-        assertThat(experience).isNotNull().hasSize(3);
+        assertThat(authors).isNotNull().hasSize(2);
+    }
 
-        val actualExperience = teacherRepository.getTeacherExperienceById(teacher.getId());
-        assertThat(actualExperience).containsExactlyInAnyOrder(experience.toArray(new Knowledge[0]));
+    @DisplayName(" сохранять авторов")
+    @Test
+    void shouldSaveAuthors() {
+        val authors = authorRepository.findAll();
+
+        authorRepository.save(TEST_AUTHOR);
+
+        val authorsAfter = authorRepository.findAll();
+
+        assertThat(authorsAfter).isNotNull().hasSize(authors.size() + 1);
+
+        val author = authorRepository.findAuthorByFullName(TEST_AUTHOR.getFullName()).get();
+
+        assertThat(author).isEqualTo(TEST_AUTHOR);
+
 
     }
 

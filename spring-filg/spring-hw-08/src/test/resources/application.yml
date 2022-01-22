@@ -4,19 +4,14 @@ spring:
       version: 3.5.5
   data:
     mongodb:
-      port: 0
-      database: test
-      #host: localhost
-      #port: 27017
-      #database: awesomeMongo
-
-
+      host: localhost
+      port: 27017
+      database: liba
 
 mongock:
-  runner-type: "ApplicationRunner" # default
-  #runner-type: "InitializingBean"
-  change-logs-scan-package:
-    - ru.otus.example.mongodbdemo.changelogs
+  runner-type: "InitializingBean"
+  change-logs-scan-package: ru.otus.spring.mongock
+
   mongo-db:
     write-concern:
       journal: false
