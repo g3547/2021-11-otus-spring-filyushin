@@ -20,8 +20,8 @@ public class SimpleGenreService implements GenreService {
     }
 
     @Override
-    public Genre getGenreById(String id) {
-        return genreRepository.findById(id).orElseThrow();
+    public Genre getGenreByName(String name) {
+        return genreRepository.findByName(name).orElseThrow();
     }
 
     @Override
@@ -30,8 +30,8 @@ public class SimpleGenreService implements GenreService {
     }
 
     @Override
-    public void delete(long id) {
-        Genre genre = genreRepository.findById(id).orElseThrow();
+    public void delete(String name) {
+        Genre genre = genreRepository.findByName(name).orElseThrow();
         genreRepository.delete(genre);
     }
 }

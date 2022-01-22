@@ -28,9 +28,10 @@ public class ShellApplicationGet {
 
 
     @ShellMethod(value = "get book", key = {"getA"})
-    public void getAuthorById(@ShellOption(defaultValue = "1") String id) {
+    public void getAuthorById(
+            @ShellOption(defaultValue = "Ivanov Petr Olegovich") String fullName) {
 
-        Author author = authorService.getById(id);
+        Author author = authorService.getByFullName(fullName);
         System.out.println(author);
     }
 

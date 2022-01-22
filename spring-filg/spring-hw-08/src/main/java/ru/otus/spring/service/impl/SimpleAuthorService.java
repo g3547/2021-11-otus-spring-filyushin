@@ -20,16 +20,16 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     @Override
-    public void update(String id, String fullName) {
-        Author author = authorRepository.findAuthorById(id).orElseThrow();
+    public void update(String oldName, String fullName) {
+        Author author = authorRepository.findAuthorByFullName(oldName).orElseThrow();
         author.setFullName(fullName);
         Author save = authorRepository.save(author);
         System.out.println("was updated to" + save.getFullName());
     }
 
     @Override
-    public Author getById(String id) {
-        Author author = authorRepository.findAuthorById(id).orElseThrow();
+    public Author getByFullName(String fullName) {
+        Author author = authorRepository.findAuthorById(fullName).orElseThrow();
         return author;
     }
 
@@ -39,8 +39,8 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     @Override
-    public void delete(String id) {
-        Author author = authorRepository.findAuthorById(id).orElseThrow();
+    public void delete(String fullName) {
+        Author author = authorRepository.findAuthorByFullName(fullName).orElseThrow();
         authorRepository.delete(author);
     }
 }

@@ -13,7 +13,6 @@ public interface BookService {
 
     void saveBook(Book book);
 
-    Book getBookById(String id);
 
     Book getBookByTitle(String title);
 

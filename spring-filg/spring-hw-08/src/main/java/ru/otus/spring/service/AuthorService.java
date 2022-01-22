@@ -10,10 +10,10 @@ public interface AuthorService {
 
     void update(String id, String fullName);
 
-    Author getById(String id);
+    Author getByFullName(String fullName);
 
     List<Author> getAll();
 
-    void delete(String id);
+    void delete(String name);
 
 }

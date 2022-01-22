@@ -6,7 +6,6 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.repositories.CommentRepository;
 import ru.otus.spring.service.AuthorService;
 import ru.otus.spring.service.BookService;
 
@@ -15,8 +14,6 @@ import ru.otus.spring.service.BookService;
 public class ShellApplicationEdit {
     private final BookService bookService;
     private final AuthorService authorService;
-
-    private final CommentRepository commentRepository;
 
 
     @ShellMethod(value = "update book", key = {"editB"})
@@ -33,16 +30,16 @@ public class ShellApplicationEdit {
 
     @ShellMethod(value = "update author", key = {"editA"})
     @Transactional
-    public void changeAuthorName(@ShellOption(defaultValue = "1") String id,
+    public void changeAuthorName(String oldName,
                                  @ShellOption(defaultValue = "prefix") String newName) {
-        authorService.update(id, newName);
+        authorService.update(oldName, newName);
     }
 
     @ShellMethod(value = "update comment", key = {"editC"})
     @Transactional
-    public void changeComment(@ShellOption(defaultValue = "1") String bookId,
+    public void changeComment(@ShellOption(defaultValue = "title1") String bookTitle,
                               @ShellOption(defaultValue = "prefix") String newValue) {
-        bookService.changeBookComment(bookId, newValue);
+        bookService.changeBookComment(bookTitle, newValue);
     }
 
 

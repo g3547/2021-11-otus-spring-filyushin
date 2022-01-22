@@ -28,15 +28,15 @@ public class SimpleBookService implements BookService {
     public void addBook(String title, String authorId, String genreId) {
         Book book = new Book(title,
                 authorRepository.findAuthorById(authorId).get(),
-                genreRepository.findById(genreId).get());
+                genreRepository.findByName(genreId).get());
 
         bookRepository.save(book);
 
     }
 
     @Override
-    public void deleteBook(String bookId) {
-        Book book = bookRepository.findBookById(bookId).orElseThrow();
+    public void deleteBook(String title) {
+        Book book = bookRepository.findBookByTitle(title).orElseThrow();
         bookRepository.delete(book);
     }
 
@@ -47,11 +47,6 @@ public class SimpleBookService implements BookService {
         } else {
             throw new RuntimeException(NULL_BOOK);
         }
-    }
-
-    @Override
-    public Book getBookById(String id) {
-        return bookRepository.findBookById(id).orElseThrow();
     }
 
     @Override
@@ -89,9 +84,9 @@ public class SimpleBookService implements BookService {
     }
 
     @Override
-    public void changeBookComment(String bookId, String commentContent) {
+    public void changeBookComment(String title, String commentContent) {
 
-        Book book = bookRepository.findBookById(bookId).orElseThrow();
+        Book book = bookRepository.findBookById(title).orElseThrow();
         Comment comment =
                 book.getComments().get(0);
         Comment newComment = new Comment(comment.getId(), commentContent, comment.getBookId());
@@ -104,7 +99,6 @@ public class SimpleBookService implements BookService {
     @Override
     public boolean deleteBookComment(String commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
-
         commentRepository.delete(comment);
         System.out.println("success delete comment " + commentId);
         return true;
