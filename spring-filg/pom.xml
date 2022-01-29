@@ -25,5 +25,6 @@
         <!--        <module>spring-hw-06</module>-->
         <module>spring-hw-07</module>
         <module>spring-hw-08</module>
+        <module>spring-hw-09-mvc</module>
     </modules>
 </project>
