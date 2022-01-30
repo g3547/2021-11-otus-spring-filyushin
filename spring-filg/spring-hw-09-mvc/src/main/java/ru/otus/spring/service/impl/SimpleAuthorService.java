@@ -20,6 +20,13 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     @Override
+    public Author getOrCreate(String name) {
+        Author author = authorRepository.findByFullName(name).orElse(new Author(0, name));
+        authorRepository.save(author);
+        return author;
+    }
+
+    @Override
     public void update(long id, String fullName) {
         Author author = authorRepository.findAuthorById(id).orElseThrow();
         author.setFullName(fullName);

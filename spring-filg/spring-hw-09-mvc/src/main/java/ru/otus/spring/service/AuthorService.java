@@ -8,6 +8,8 @@ public interface AuthorService {
 
     long create(String name);
 
+    Author getOrCreate(String name);
+
     void update(long id, String fullName);
 
     Author getById(long id);

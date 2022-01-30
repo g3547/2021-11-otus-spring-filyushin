@@ -26,6 +26,13 @@ public class SimpleGenreService implements GenreService {
     }
 
     @Override
+    public Genre getOrCreate(String name) {
+        Genre genre = genreRepository.findByName(name).orElse(new Genre(0, name));
+        genreRepository.save(genre);
+        return genre;
+    }
+
+    @Override
     public long create(String name) {
         Genre genre = new Genre(0, name);
         return genreRepository.save(genre).getId();

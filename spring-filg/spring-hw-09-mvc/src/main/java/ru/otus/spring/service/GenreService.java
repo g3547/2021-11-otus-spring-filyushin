@@ -9,7 +9,10 @@ public interface GenreService {
 
     Genre getGenreById(long id);
 
-    long create(String fullName);
+    Genre getOrCreate(String name);
+
+
+    long create(String name);
 
     void delete(long id);
 }
