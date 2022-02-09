@@ -31,8 +31,8 @@ public class DtoServiceImpl implements DtoService {
 
     @Override
     public Book bookDtoToBook(BookDto bookDto) {
-        Author author = authorService.getOrCreate(bookDto.getAuthor());
-        Genre genre = genreService.getOrCreate(bookDto.getGenre());
+        Author author = authorService.getById(bookDto.getAuthor());
+        Genre genre = genreService.getGenreById(bookDto.getGenre());
 
         return new Book(bookDto.getId(), bookDto.getTitle(), author, genre);
     }

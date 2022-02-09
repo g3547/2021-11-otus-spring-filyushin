@@ -20,8 +20,8 @@ public class SimpleGenreService implements GenreService {
     }
 
     @Override
-    public Genre getGenreById(long id) {
-        Genre genreById = genreRepository.findById(id).orElseThrow();
+    public Genre getGenreById(String id) {
+        Genre genreById = genreRepository.findById(Long.parseLong(id)).orElseThrow();
         return genreById;
     }
 

@@ -12,7 +12,7 @@ public interface AuthorService {
 
     void update(long id, String fullName);
 
-    Author getById(long id);
+    Author getById(String id);
 
     List<Author> getAll();
 

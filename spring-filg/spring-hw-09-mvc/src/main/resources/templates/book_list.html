@@ -55,7 +55,7 @@
             <a th:href="@{/edit(id=${book.id})}" href="edit_book.html">
                 <button type="button" th:text="#{edit-button-caption}">Edit</button>
             </a>
-            <a href="/" th:action="@{/delete(id=${book.id})}">
+            <a th:href="@{/delete(id=${book.id})}" href="del_book.html">
                 <button type="button" th:text="#{delete-button-caption}">Delete</button>
             </a>
         </td>

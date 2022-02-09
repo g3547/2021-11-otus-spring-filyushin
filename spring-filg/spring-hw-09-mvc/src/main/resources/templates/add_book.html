@@ -36,7 +36,9 @@
 <body>
 
 <!-- Book creation -->
-<form id="edit-form" action="add_book.html" th:action="@{/add(title=${title},author=${author},genre=${genre})}"
+<form id="edit-form" action="add_book.html"
+      th:object="${book}"
+      th:action="@{/add}"
       th:method="post">
     <h3 th:text="#{book-form-header}">Add Book Info:</h3>
 
@@ -47,12 +49,25 @@
 
     <div class="row">
         <label for="book-author-input">Author:</label>
-        <input id="book-author-input" name="author" type="text" value="Dostoevskiy"/>
+        <select th:field="*{author}">
+            <option id="book-author-input" name="author"
+                    th:each="author : ${authors}"
+                    th:text="${author.fullName}"
+                    th:value="${author.id}"
+            >Dostoevskiy
+            </option>
+        </select>
     </div>
 
     <div class="row">
         <label for="book-genre-input">Genre:</label>
-        <input id="book-genre-input" name="genre" type="text" value="Roman"/>
+        <select th:field="*{genre}">
+            <option id="book-genre-input" name="genre"
+                    th:each="genre: ${genres}"
+                    th:text="${genre.name}"
+                    th:value="${genre.id}">Roman
+            </option>
+        </select>
     </div>
 
     <div class="row">

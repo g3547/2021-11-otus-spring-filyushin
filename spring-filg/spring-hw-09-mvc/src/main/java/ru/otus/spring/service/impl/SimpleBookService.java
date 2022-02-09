@@ -55,11 +55,6 @@ public class SimpleBookService implements BookService {
         return book;
     }
 
-    @Override
-    public Book findBookWith1inTitle() {
-        Book book = bookRepository.findBookWith1inTitle().orElseThrow();
-        return book;
-    }
 
     @Override
     public List<Comment> getBookComments(long id) {

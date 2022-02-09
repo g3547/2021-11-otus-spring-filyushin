@@ -35,8 +35,8 @@ public class SimpleAuthorService implements AuthorService {
     }
 
     @Override
-    public Author getById(long id) {
-        Author author = authorRepository.findAuthorById(id).orElseThrow();
+    public Author getById(String id) {
+        Author author = authorRepository.findAuthorById(Long.parseLong(id)).orElseThrow();
         return author;
     }
 

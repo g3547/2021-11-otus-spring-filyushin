@@ -15,8 +15,6 @@ public interface BookService {
 
     Book getBookById(long id);
 
-    Book findBookWith1inTitle();
-
     List<Comment> getBookComments(long id);
 
     long countBooks();
