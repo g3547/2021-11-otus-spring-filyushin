@@ -100,14 +100,6 @@ public class BookJpaTests {
     }
 
     @Test
-    @DisplayName("должен отдавать книги  c 1 в названии")
-    public void testGetBookWith1inTitle() {
-        Book book = bookRepository.findBookWith1inTitle().get();
-        assertThat(book).isNotNull().matches(b -> b.getId() == 1)
-                .matches(b -> b.getTitle().equals(BOOK_TITLE1));
-    }
-
-    @Test
     @DisplayName("должен удалять книги")
     public void testDelete() {
         val firstBook = em.find(Book.class, FIRST_BOOK_ID);
