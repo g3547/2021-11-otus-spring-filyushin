@@ -11,6 +11,7 @@ import ru.otus.spring.service.GenreService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -44,5 +45,15 @@ public class DtoServiceImpl implements DtoService {
             list.add(bookToDto(book));
         }
         return list;
+    }
+
+    @Override
+    public List<AuthorDto> authorsToDto(List<Author> authors) {
+        return authors.stream().map(AuthorDto::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GenreDto> genresToDto(List<Genre> genres) {
+        return genres.stream().map(GenreDto::toDto).collect(Collectors.toList());
     }
 }

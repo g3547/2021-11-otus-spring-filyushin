@@ -3,6 +3,7 @@ package ru.otus.spring.rest.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import ru.otus.spring.domain.Author;
 
 @Getter
 @Setter
@@ -12,4 +13,7 @@ public class AuthorDto {
     private long id;
     private String fullName;
 
+    public static AuthorDto toDto(Author author) {
+        return new AuthorDto(author.getId(), author.getFullName());
+    }
 }

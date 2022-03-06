@@ -30,7 +30,7 @@
         }
 
     </style>
-
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -46,22 +46,44 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.id}">1</td>
-        <td th:text="${book.title}">IDIOT</td>
-        <td th:text="${book.author}">Dostoevckiy</td>
-        <td th:text="${book.genre}">roman</td>
-        <td>
+
+    <a>
+        <button type="button" th:text="#{add-button-caption}">Add
+
+        </button>
+    </a>
+    <a>
+        <button type="button" th:text="#{delete-button-caption} ">Clear
+        </button>
+    </a>
+    </tbody>
+</table>
+
+</body>
+<script>
+    $(function () {
+        $.get('/api/book').done(function (books) {
+            books.forEach(function (book) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${book.id}</td>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.genre}</td>
+                        <td>
             <a th:href="@{/edit(id=${book.id})}" href="edit_book.html">
                 <button type="button" th:text="#{edit-button-caption}">Edit</button>
             </a>
-            <a th:href="@{/delete(id=${book.id})}" href="del_book.html">
-                <button type="button" th:text="#{delete-button-caption}">Delete</button>
+            <a>
+                <button type="button"  th:text="#{delete-button-caption}">Delete</button>
             </a>
-        </td>
-    </tr>
-    <a href="add_book.html" th:href="@{/add}" th:text="#{add-button-caption}">Add</a>
-    </tbody>
-</table>
-</body>
+                        </td>
+                    </tr>
+                `)
+            });
+        })
+    });
+
+</script>
+
 </html>

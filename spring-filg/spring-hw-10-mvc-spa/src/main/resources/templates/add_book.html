@@ -42,30 +42,31 @@
       th:method="post">
     <h3 th:text="#{book-form-header}">Add Book Info:</h3>
 
-    <div class="row">
+
+</form>
+
+</body>
+
+<script>
+    $(function () {
+        $.get('/api/book/{id}').done(function (book) {
+            $('form').append(`
+ <div class="row">
         <label for="book-title-input">Title:</label>
-        <input id="book-title-input" name="title" type="text" value="Idiot"/>
+        <input id="book-title-input" name="title" type="text" value="Idiot">${book.title}
     </div>
 
     <div class="row">
         <label for="book-author-input">Author:</label>
-        <select th:field="*{author}">
-            <option id="book-author-input" name="author"
-                    th:each="author : ${authors}"
-                    th:text="${author.fullName}"
-                    th:value="${author.id}"
-            >Dostoevskiy
-            </option>
+        <select>
+            <option id="book-author-input" name="author"></option>
         </select>
     </div>
 
     <div class="row">
         <label for="book-genre-input">Genre:</label>
-        <select th:field="*{genre}">
-            <option id="book-genre-input" name="genre"
-                    th:each="genre: ${genres}"
-                    th:text="${genre.name}"
-                    th:value="${genre.id}">Roman
+        <select>
+            <option id="book-genre-input" name="genre">
             </option>
         </select>
     </div>
@@ -76,7 +77,9 @@
             <button type="button" th:text="#{cancel-button-caption}">Cancel</button>
         </a>
     </div>
-</form>
+                `)
+        })
+    });
 
-</body>
+</script>
 </html>

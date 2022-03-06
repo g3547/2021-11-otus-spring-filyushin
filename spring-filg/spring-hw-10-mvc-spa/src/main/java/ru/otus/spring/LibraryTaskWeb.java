@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class LibraryTask {
+public class LibraryTaskWeb {
 
     public static void main(String[] args) {
-        SpringApplication.run(LibraryTask.class, args);
+        SpringApplication.run(LibraryTaskWeb.class, args);
     }
 
 }
