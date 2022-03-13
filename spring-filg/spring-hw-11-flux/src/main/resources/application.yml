@@ -1,0 +1,16 @@
+spring:
+  main:
+    allow-circular-references: true
+  data:
+    mongodb:
+      database: liba
+      host: localhost
+      port: 27017
+
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package: ru.otus.spring.mongock
+
+  logging:
+    level:
+      ROOT: ERROR
