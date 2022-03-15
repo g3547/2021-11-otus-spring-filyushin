@@ -1,0 +1,46 @@
+POST http://localhost:8080/api/book
+Content-Type: application/json
+
+{
+  "id": -1,
+  "title": "fkfkfkfk",
+  "author": "1",
+  "genre": "1"
+}
+
+###
+GET http://localhost:8080/
+
+<> 2022-03-06T093523.200.html
+
+###
+GET http://localhost:8080/api/author
+
+<> 2022-03-06T093531.200.json
+
+###
+GET http://localhost:8080/api/book
+
+###
+GET http://localhost:8080/api/book/1
+
+
+###
+GET http://localhost:8080/api/book/1
+
+###
+POST http://localhost:8080/api/book/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "88884747474747",
+  "author": "1",
+  "genre": "1"
+}
+
+###
+DELETE http://localhost:8080/api/book/1
+
+###
+GET http://localhost:8080/api/genre
