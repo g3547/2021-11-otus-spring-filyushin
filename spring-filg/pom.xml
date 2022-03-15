@@ -27,5 +27,6 @@
         <module>spring-hw-08</module>
         <module>spring-hw-09-mvc</module>
         <module>spring-hw-10-mvc-spa</module>
+        <module>spring-hw-12-mvc-sec</module>
     </modules>
 </project>
