@@ -13,7 +13,6 @@
         <maven.compiler.source>11</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
     <packaging>pom</packaging>
 
     <modules>
@@ -27,5 +26,6 @@
         <module>spring-hw-08</module>
         <module>spring-hw-09-mvc</module>
         <module>spring-hw-10-mvc-spa</module>
+        <module>spring-hw-11-flux</module>
     </modules>
 </project>
